@@ -1,18 +1,22 @@
+var NgAnnotations = {};
+
 // components
-export var controller = require('src/decorators/components/controller');
-export var service = require('src/decorators/components/service');
-export var animation = require('src/decorators/components/animation');
-export var config = require('src/decorators/components/config');
-export var directive = require('src/decorators/components/directive');
-export var factory = require('src/decorators/components/factory');
-export var filter = require('src/decorators/components/filter');
-export var provider = require('src/decorators/components/provider');
-export var run = require('src/decorators/components/run');
+NgAnnotations.controller = require('src/decorators/components/controller');
+NgAnnotations.service = require('src/decorators/components/service');
+NgAnnotations.animation = require('src/decorators/components/animation');
+NgAnnotations.config = require('src/decorators/components/config');
+NgAnnotations.directive = require('src/decorators/components/directive');
+NgAnnotations.factory = require('src/decorators/components/factory');
+NgAnnotations.filter = require('src/decorators/components/filter');
+NgAnnotations.provider = require('src/decorators/components/provider');
+NgAnnotations.run = require('src/decorators/components/run');
 
 // wrappers
-export var constant = require('src/wrappers/constant');
-export var value = require('src/wrappers/value');
+NgAnnotations.constant = require('src/wrappers/constant');
+NgAnnotations.value = require('src/wrappers/value');
 
 // utils
-export var inject = require('src/decorators/utils/inject');
-export var autobind = require('src/decorators/utils/autobind');
+NgAnnotations.inject = require('src/decorators/utils/inject');
+NgAnnotations.autobind = require('src/decorators/utils/autobind');
+
+export default window.ngAnnotations = NgAnnotations;

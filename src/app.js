@@ -9,6 +9,10 @@ export var filter = require('src/decorators/components/filter');
 export var provider = require('src/decorators/components/provider');
 export var run = require('src/decorators/components/run');
 
+// wrappers
+export var constant = require('src/wrappers/constant');
+export var value = require('src/wrappers/value');
+
 // utils
 export var inject = require('src/decorators/utils/inject');
 export var autobind = require('src/decorators/utils/autobind');

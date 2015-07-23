@@ -23,6 +23,7 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "jade": "^1.11.0",
+    "jade-loader": "^0.7.1",
     "node-sass": "^3.2.0",
     "style-loader": "^0.12.3",
     "todomvc-app-css": "^2.0.1",

@@ -3,6 +3,7 @@ export var controller = require('src/decorators/components/controller');
 export var service = require('src/decorators/components/service');
 export var animation = require('src/decorators/components/animation');
 export var config = require('src/decorators/components/config');
+export var directive = require('src/decorators/components/directive');
 
 // utils
 export var inject = require('src/decorators/utils/inject');

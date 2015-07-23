@@ -1,1 +1,1 @@
-export var controller = require('src/decorators/controller');
+export var controller = require('src/decorators/components/controller');

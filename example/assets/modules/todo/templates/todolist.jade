@@ -1,0 +1,42 @@
+section.todoapp
+	header.header
+		h1 Todos
+		form.todo-form(ng-submit="TodoList.add()")
+			input.new-todo(placeholder="What needs to be done?", ng-model="TodoList.newTodo", autofocus)
+
+	section.main(ng-show="TodoList.todos.length > 0", ng-cloak)
+		input.toggle-all(type="checkbox", ng-checked="TodoList.allChecked", ng-click="TodoList.markAll()")
+		label(for="toggle-all") Mark all as complete
+		ul.todo-list
+			li(
+			ng-repeat="todo in TodoList.todos | filter:TodoList.statusFilter track by $index",
+			ng-class="{completed: todo.completed, editing: todo === TodoList.editedTodo}")
+
+				.view
+					input.toggle(type="checkbox", ng-model="todo.completed", ng-change="TodoList.statusEdited()")
+					label(ng-dblclick="TodoList.edit(todo)") {{todo.title}}
+					button.destroy(ng-click="TodoList.remove(todo)")
+
+				form(ng-submit="TodoList.doneEditing(todo)")
+					input.edit(
+						ng-trim="false",
+						ng-model="todo.title",
+						ng-blur="TodoList.doneEditing(todo)",
+						todo-escape="TodoList.revert(todo)",
+						todo-focus="todo === TodoList.editedTodo")
+
+	footer.footer(ng-show="TodoList.todos.length > 0", ng-cloak)
+
+		span.todo-count
+			strong {{TodoList.nbRemaining}}&nbsp;
+			ng-pluralize(count="TodoList.nbRemaining", when="{ one: 'item left', other: 'items left' }")
+
+		ul.filters
+			li
+				a(ng-click="TodoList.setFilter('none')", ng-class="{selected: TodoList.statusFilter.completed === undefined}") All
+			li
+				a(ng-click="TodoList.setFilter('active')", ng-class="{selected: TodoList.statusFilter.completed === false}") Active
+			li
+				a(ng-click="TodoList.setFilter('completed')", ng-class="{selected: TodoList.statusFilter.completed === true}") Completed
+
+		button#clear-completed(ng-click="TodoList.clearCompletedTodos()", ng-show="TodoList.remainingCount < TodoList.todos.length") Clear completed

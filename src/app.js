@@ -5,6 +5,7 @@ export var animation = require('src/decorators/components/animation');
 export var config = require('src/decorators/components/config');
 export var directive = require('src/decorators/components/directive');
 export var factory = require('src/decorators/components/factory');
+export var filter = require('src/decorators/components/filter');
 
 // utils
 export var inject = require('src/decorators/utils/inject');

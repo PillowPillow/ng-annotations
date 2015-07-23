@@ -1,0 +1,1 @@
+export var controller = require('src/decorators/controller');

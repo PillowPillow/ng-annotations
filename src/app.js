@@ -7,6 +7,7 @@ export var directive = require('src/decorators/components/directive');
 export var factory = require('src/decorators/components/factory');
 export var filter = require('src/decorators/components/filter');
 export var provider = require('src/decorators/components/provider');
+export var run = require('src/decorators/components/run');
 
 // utils
 export var inject = require('src/decorators/utils/inject');

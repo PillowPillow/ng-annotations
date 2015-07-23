@@ -1,8 +1,17 @@
-import {controller} from 'src/app';
+import {controller, inject} from 'src/app';
 
 
 const app = angular.module('todomvc', []);
 export default app.name;
 
+app.service('foobar', function() {})
+
 @controller()
-class MyCtrl {}
+@inject('foobar')
+class MyCtrl {
+	construct(service) {
+		console.log(service);
+	}
+}
+
+console.log(MyCtrl.$inject)

@@ -16,7 +16,6 @@ var project = Path.join(__dirname, '..'),
 
 config.entryfile = entryfile;
 config.devtool = 'source-map';
-console.log(entryfile)
 config.entry = entryfile;
 
 config.cache = true;
@@ -55,15 +54,16 @@ config.resolve.alias = {
 config.plugins = [
     new webpack.optimize.OccurenceOrderPlugin(),
 	new webpack.optimize.DedupePlugin(),
-    new webpack.NoErrorsPlugin(),
-	new webpack.optimize.UglifyJsPlugin({
-		minimize: true,
-		sourceMap: true,
-		compress: { warnings: false },
-		mangle: {
-			except: ['exports', 'require', 'module']
-		}
-	})
+    new webpack.NoErrorsPlugin()
+	//,
+	//new webpack.optimize.UglifyJsPlugin({
+	//	minimize: true,
+	//	sourceMap: true,
+	//	compress: { warnings: false },
+	//	mangle: {
+	//		except: ['exports', 'require', 'module']
+	//	}
+	//})
 ];
 
 module.exports = config;

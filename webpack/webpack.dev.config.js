@@ -6,7 +6,7 @@ var Path = require('path'),
 
 /*consts*/
 var project = Path.join(__dirname, '..'),
-	wdir = Path.join(project, 'example/assets'),
+	wdir = Path.join(project, 'example/webpack'),
 	entryfile = Path.join(wdir, 'app.js'),
 	src = Path.join(project, 'src'),
 	styles = Path.join(wdir, 'styles'),

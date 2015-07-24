@@ -12,7 +12,7 @@
 			$scope.$on('$destroy', () => $node.unbind('keydown'));
 		}
 	}
-	TodoEscape.declare('todomvc');
+	TodoEscape.autodeclare('todomvc');
 
 })()
 

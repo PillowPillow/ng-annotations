@@ -22,7 +22,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this._filter = $filter('filter');
 		}
 
-		_createClass(TodoList, [{
+		var _TodoList = TodoList;
+
+		_createClass(_TodoList, [{
+			key: 'todos',
+			get: function () {
+				return this._todoFactory.todos;
+			}
+		}, {
+			key: 'allChecked',
+			get: function () {
+				return this.nbRemaining === 0;
+			}
+		}, {
+			key: 'nbRemaining',
+			get: function () {
+				return this._filter(this.todos, { completed: false }).length;
+			}
+		}, {
 			key: 'setFilter',
 			value: function setFilter(status) {
 				switch (status) {
@@ -86,29 +103,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 					return todo.completed = !completed;
 				});
 			}
-		}, {
-			key: 'todos',
-			get: function get() {
-				return this._todoFactory.todos;
-			}
-		}, {
-			key: 'allChecked',
-			get: function get() {
-				return this.nbRemaining === 0;
-			}
-		}, {
-			key: 'nbRemaining',
-			get: function get() {
-				return this._filter(this.todos, { completed: false }).length;
-			}
 		}]);
 
-		var _TodoList = TodoList;
 		TodoList = inject('todosFactory', '$filter')(TodoList) || TodoList;
 		TodoList = controller('todoCtrl')(TodoList) || TodoList;
 		return TodoList;
 	})();
 
-	TodoList.declare('todomvc');
+	TodoList.autodeclare('todomvc');
 	//angular.module('todomvc').controller(TodoList.$name, TodoList.$component);
 })();

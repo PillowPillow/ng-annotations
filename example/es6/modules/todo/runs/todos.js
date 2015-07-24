@@ -17,18 +17,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this.loadTodos();
 		}
 
-		_createClass(TodoRun, [{
+		var _TodoRun = TodoRun;
+
+		_createClass(_TodoRun, [{
 			key: 'loadTodos',
 			value: function loadTodos() {
 				this._todoFactory.load();
 			}
 		}]);
 
-		var _TodoRun = TodoRun;
 		TodoRun = inject('todosFactory')(TodoRun) || TodoRun;
 		TodoRun = run()(TodoRun) || TodoRun;
 		return TodoRun;
 	})();
 
-	TodoRun.declare('todomvc');
+	TodoRun.autodeclare('todomvc');
 })();

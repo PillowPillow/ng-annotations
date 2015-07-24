@@ -82,7 +82,7 @@
 		};
 
 	}
-	TodoList.declare('todomvc');
+	TodoList.autodeclare('todomvc');
 	//angular.module('todomvc').controller(TodoList.$name, TodoList.$component);
 })()
 

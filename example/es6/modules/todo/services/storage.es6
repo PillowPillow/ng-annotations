@@ -18,6 +18,6 @@
 			localStorage.setItem(this.storageId, JSON.stringify(todos));
 		}
 	}
-	TodoStorage.declare('todomvc');
+	TodoStorage.autodeclare('todomvc');
 
 })()

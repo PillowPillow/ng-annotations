@@ -31,4 +31,4 @@ export default app.name;
 	todolistDirective,
 	todoEscapeDirective,
 	todoFocusDirective
-].forEach(component => component.declare(app));
+].forEach(component => component.autodeclare(app));

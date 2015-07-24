@@ -22,5 +22,5 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		return TodoList;
 	})();
 
-	TodoList.declare('todomvc');
+	TodoList.autodeclare('todomvc');
 })();

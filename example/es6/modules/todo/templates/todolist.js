@@ -20,5 +20,5 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		return TemplateRun;
 	})();
 
-	TemplateRun.declare('todomvc');
+	TemplateRun.autodeclare('todomvc');
 })();

@@ -40,6 +40,6 @@
 		}
 
 	}
-	Todos.declare('todomvc');
+	Todos.autodeclare('todomvc');
 
 })()

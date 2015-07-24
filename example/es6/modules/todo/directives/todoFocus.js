@@ -20,7 +20,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this.timeout = $timeout;
 		}
 
-		_createDecoratedClass(TodoFocus, [{
+		var _TodoFocus = TodoFocus;
+
+		_createDecoratedClass(_TodoFocus, [{
 			key: 'link',
 			decorators: [autobind],
 			value: function link($scope, $node, attrs) {
@@ -34,11 +36,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			}
 		}]);
 
-		var _TodoFocus = TodoFocus;
 		TodoFocus = inject('$timeout')(TodoFocus) || TodoFocus;
 		TodoFocus = directive('todoFocus')(TodoFocus) || TodoFocus;
 		return TodoFocus;
 	})();
 
-	TodoFocus.declare('todomvc');
+	TodoFocus.autodeclare('todomvc');
 })();

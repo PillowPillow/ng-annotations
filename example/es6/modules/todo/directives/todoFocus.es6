@@ -16,7 +16,7 @@
 			$scope.$watch(attrs.todoFocus, (val) => val && this.timeout(() => $node[0].focus(), 0, false));
 		}
 	}
-	TodoFocus.declare('todomvc');
+	TodoFocus.autodeclare('todomvc');
 
 })()
 

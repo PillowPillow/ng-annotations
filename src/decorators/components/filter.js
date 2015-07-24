@@ -18,10 +18,10 @@ export default function NgFilter(name = '') {
 		var component = function(...injections) {
             let filter = new target(...injections);
 
-			if(!(filter.$execute instanceof Function))
-				throw Error('an annotated "filter" must implement the "$execute" method');
+			if(!(filter.$filter instanceof Function))
+				throw Error('an annotated "filter" must implement the "$filter" method');
 
-			return (...parameters) => filter.$execute(...parameters);
+			return (...parameters) => filter.$filter(...parameters);
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

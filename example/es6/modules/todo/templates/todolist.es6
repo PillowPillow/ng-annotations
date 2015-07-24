@@ -43,5 +43,5 @@
 		}
 
 	}
-	TemplateRun.declare('todomvc');
+	TemplateRun.autodeclare('todomvc');
 })()

@@ -15,7 +15,7 @@
 		}
 
 	}
-	TodoRun.declare('todomvc');
+	TodoRun.autodeclare('todomvc');
 
 })()
 

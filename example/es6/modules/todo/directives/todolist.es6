@@ -9,7 +9,7 @@
 		controllerAs = 'TodoList';
 		templateUrl = 'todolist.tpl';
 	}
-	TodoList.declare('todomvc');
+	TodoList.autodeclare('todomvc');
 
 })()
 

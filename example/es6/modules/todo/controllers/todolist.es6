@@ -83,6 +83,6 @@
 
 	}
 	TodoList.declare('todomvc');
-
+	//angular.module('todomvc').controller(TodoList.$name, TodoList.$component);
 })()
 

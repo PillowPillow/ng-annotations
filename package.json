@@ -5,7 +5,8 @@
   "main": "dist/ng-annotations-based.js",
   "scripts": {
     "build": "webpack --progress -c --config webpack/webpack.dist.config.js",
-    "dev": "webpack-dev-server --content-base example/webpack --hot --progress -c --config webpack/webpack.dev.config.js"
+    "dev": "webpack-dev-server --content-base example/webpack --hot --progress -c --config webpack/webpack.dev.config.js",
+    "es6": "grunt es6"
   },
   "keywords": [
     "angular",

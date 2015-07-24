@@ -49,8 +49,8 @@ export default class theController {
 
 ------------
 
-### Information
-> All examples below will show you the webpack way.  
+### Informations
+> All the examples below will show you the webpack way.  
 > However, an implementation of the angular todolist with the basic es6 syntax is available in the [example/es6](./example/es6) folder 
 
 ### Available annotations

@@ -16,6 +16,8 @@ export default class NgDecoratorUtils {
 			enumerable: false,
 			value: function(ngModule) {
 				let params = !!this.$name ? [this.$name, this.$component] : [this.$component];
+				if(typeof ngModule === 'string')
+					ngModule = angular.module(ngModule);
 				return ngModule[this.$type](...params);
 			}
 		});

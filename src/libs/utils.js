@@ -11,7 +11,7 @@ export default class NgDecoratorUtils {
 	}
 
 	static addDeclareMethod(target) {
-		Object.defineProperty(target, 'declare', {
+		Object.defineProperty(target, 'autodeclare', {
 			configurable: true,
 			enumerable: false,
 			value: function(ngModule) {

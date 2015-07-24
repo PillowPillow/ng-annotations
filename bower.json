@@ -1,0 +1,17 @@
+{
+  "name": "ng-annotations",
+  "version": "0.1.0",
+  "homepage": "https://github.com/PillowPillow/ng-annotations",
+  "authors": [
+    "Nicolas Gaignoux <gaignoux.nicolas@gmail.com>"
+  ],
+  "description": "angular wrapper based on es7 annotations",
+  "main": "dist/ng-annotations.js",
+  "keywords": [
+    "angular",
+    "decorator",
+    "annotation",
+    "wrapper"
+  ],
+  "license": "MIT"
+}

@@ -18,9 +18,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this.storageId = STORAGE_ID;
 		}
 
-		var _TodoStorage = TodoStorage;
-
-		_createClass(_TodoStorage, [{
+		_createClass(TodoStorage, [{
 			key: 'get',
 			value: function get() {
 				return JSON.parse(localStorage.getItem(this.storageId) || '[]');
@@ -32,6 +30,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			}
 		}]);
 
+		var _TodoStorage = TodoStorage;
 		TodoStorage = inject('storage-id')(TodoStorage) || TodoStorage;
 		TodoStorage = service('todoStorage')(TodoStorage) || TodoStorage;
 		return TodoStorage;

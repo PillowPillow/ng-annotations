@@ -17,9 +17,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this.restrict = 'A';
 		}
 
-		var _TodoEscape = TodoEscape;
-
-		_createDecoratedClass(_TodoEscape, [{
+		_createDecoratedClass(TodoEscape, [{
 			key: 'link',
 			decorators: [autobind],
 			value: function link($scope, $node, attrs) {
@@ -34,6 +32,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			}
 		}]);
 
+		var _TodoEscape = TodoEscape;
 		TodoEscape = directive('todoEscape')(TodoEscape) || TodoEscape;
 		return TodoEscape;
 	})();

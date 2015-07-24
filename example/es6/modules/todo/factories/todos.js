@@ -18,9 +18,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			this._storage = storage;
 		}
 
-		var _Todos = Todos;
-
-		_createClass(_Todos, [{
+		_createClass(Todos, [{
 			key: 'load',
 			value: function load() {
 				this.todos = this._storage.get();
@@ -58,6 +56,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 			}
 		}]);
 
+		var _Todos = Todos;
 		Todos = inject('todoStorage')(Todos) || Todos;
 		Todos = factory('todosFactory')(Todos) || Todos;
 		return Todos;

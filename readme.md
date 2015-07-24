@@ -1,4 +1,4 @@
-# ng-annotations
+# ng-annotation
 ###angular wrapper based on es7 annotations
 =======================
 
@@ -9,9 +9,9 @@ This library was build with webpack in mind but should work well with the other 
 
 ### Installation
 #### `npm`
-`npm install --save ng-annotations`  
+`npm install --save ng-annotation`  
 #### `Bower`
-`bower install --save ng-annotations`  
+`bower install --save ng-annotation`  
 
 ------------
 ### Basic Usage

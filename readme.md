@@ -59,7 +59,7 @@ export default class theController {
 ## Utils
 
 ###`@inject`
-> The inject annotation replaces the classic array syntax to declare a dependency injection  
+> The inject annotation replaces the classical array syntax for declare a dependency injection  
 > Basically, it will feed the $inject property with the list of dependencies
 
 #### type: *function*

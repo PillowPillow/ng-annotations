@@ -1,5 +1,5 @@
 {
-  "name": "ng-annotation",
+  "name": "ng-annotations",
   "version": "0.1.2",
   "description": "angular wrapper based on annotations",
   "main": "dist/ng-annotations.js",

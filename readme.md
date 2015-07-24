@@ -9,9 +9,9 @@ This library was build with webpack in mind but should work well with the other 
 
 ### Installation
 #### `npm`
-`npm install --save ng-annotation`  
+`npm install --save ng-annotations`  
 #### `Bower`
-`bower install --save ng-annotation`  
+`bower install --save ng-annotations`  
 
 ------------
 ### Basic Usage

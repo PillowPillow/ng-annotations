@@ -18,7 +18,9 @@
     "type": "git",
     "url": "git@github.com:PillowPillow/ng-annotations.git"
   },
-  "author": "Nicolas Gaignoux",
+  "authors": [
+    "Nicolas Gaignoux <gaignoux.nicolas@gmail.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "angular": "^1.4.3",

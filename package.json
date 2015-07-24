@@ -14,6 +14,10 @@
     "annotation",
     "wrapper"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PillowPillow/ng-annotations.git"
+  },
   "author": "Nicolas Gaignoux",
   "license": "MIT",
   "devDependencies": {

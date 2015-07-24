@@ -2,7 +2,7 @@
   "name": "ng-annotation",
   "version": "0.1.0",
   "description": "angular wrapper based on annotations",
-  "main": "dist/ng-annotations-based.js",
+  "main": "dist/ng-annotations.js",
   "scripts": {
     "build": "webpack --progress -c --config webpack/webpack.dist.config.js",
     "dev": "webpack-dev-server --content-base example/webpack --hot --progress -c --config webpack/webpack.dev.config.js",

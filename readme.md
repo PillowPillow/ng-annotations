@@ -16,7 +16,7 @@ This library was build with webpack in mind but should work well with the other 
 ------------
 ### Basic Usage
 > all examples in this repo and below use the [babel-core](https://babeljs.io/) library as transpiler
-> you're free to use any other supersets if they support the es7 decorator feature.
+> you're free to use any other if it supports the es7 decorator feature.
 
 #### `webpack`  
 > a configuration example is available in the [webpack dev config](./webpack/webpack.dev.config.js)

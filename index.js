@@ -1,1 +1,2 @@
-module.exports = require('./dist/ng-annotations');
+require('./dist/ng-annotations');
+module.exports = ngAnnotations;

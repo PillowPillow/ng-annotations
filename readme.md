@@ -138,14 +138,14 @@ export default class CommunicationService {
 
 ````javascript
 /*file1.js*/
-import {service} from 'ng-annotations';
+import {service} from 'node_modules/ng-annotations';
 
 @service()
 export default class MyService {}
 
 
 /*file2.js*/
-import {controller, inject} from 'ng-annotations';
+import {controller, inject} from 'node_modules/ng-annotations';
 
 import {$name as myService} from './file1';
 
@@ -180,7 +180,7 @@ app.service(myService.$name, myService.$component);
 app.controller(myController.$name, myController.$component);
 
 /*without import*/
-import {service} from 'ng-annotations';
+import {service} from 'node_modules/ng-annotations';
 
 @service()
 class MyService {}
@@ -199,7 +199,7 @@ MyService.autodeclare('moduleName');
 
 #### Usage:
 ````javascript
-import {controller} from 'ng-annotations';
+import {controller} from 'node_modules/ng-annotations';
 
 @controller('HelloWorld')
 export default class MyController {
@@ -228,7 +228,7 @@ html
 
 #### Usage:
 ````javascript
-import {service} from 'ng-annotations';
+import {service} from 'node_modules/ng-annotations';
 
 @service('OtherName')
 export default class MyService {
@@ -246,7 +246,7 @@ export default class MyService {
 
 #### Usage:
 ````javascript
-import {provider, inject} from 'ng-annotations';
+import {provider, inject} from 'node_modules/ng-annotations';
 
 @provider()
 export default class MyProvider {
@@ -264,7 +264,7 @@ export default class MyProvider {
 
 #### Usage:
 ````javascript
-import {factory} from 'ng-annotations';
+import {factory} from 'node_modules/ng-annotations';
 
 @factory()
 export default class MyFactory {
@@ -289,7 +289,7 @@ angular.module('...')
 > You can change this behaviour by defining an `expose` method 
 
 ````javascript
-import {factory, autobind} from 'ng-annotations';
+import {factory, autobind} from 'node_modules/ng-annotations';
 
 @factory()
 export default class MyFactory {
@@ -336,7 +336,7 @@ angular.module('...')
 
 #### Usage:
 ````javascript
-import {directive} from 'ng-annotations';
+import {directive} from 'node_modules/ng-annotations';
 
 @directive('myDirective')
 export default class MyDirective {
@@ -357,7 +357,7 @@ export default class MyDirective {
 
 #### Usage:
 ````javascript
-import {animation} from 'ng-annotations';
+import {animation} from 'node_modules/ng-annotations';
 
 @animation('.foobar')
 export default class FoobarAnimation {
@@ -379,7 +379,7 @@ export default class FoobarAnimation {
 #### type: *function*
 #### Usage:
 ````javascript
-import {config, inject} from 'ng-annotations';
+import {config, inject} from 'node_modules/ng-annotations';
 
 @config()
 @inject('$routeProvider')
@@ -403,7 +403,7 @@ export default class FooBarConfiguration {
 #### type: *function*
 #### Usage:
 ````javascript
-import {run, inject} from 'ng-annotations';
+import {run, inject} from 'node_modules/ng-annotations';
 
 @run()
 @inject('myFactory')
@@ -433,7 +433,7 @@ export default class SomeRun {
 > to make it work you need to implement a `$filter` method. This is the method used by angular.
 
 ````javascript
-import {filter} from 'ng-annotations';
+import {filter} from 'node_modules/ng-annotations';
 
 @filter('capitalizeFilter')
 export default class Capitalize {
@@ -459,7 +459,7 @@ export default class Capitalize {
 
 #### Usage:
 ````javascript
-import {constant} from 'ng-annotations';
+import {constant} from 'node_modules/ng-annotations';
 
 export default constant('name', 'a constant');
 ````
@@ -470,7 +470,7 @@ export default constant('name', 'a constant');
 
 #### Usage:
 ````javascript
-import {value} from 'ng-annotations';
+import {value} from 'node_modules/ng-annotations';
 
 export default value('name', 'a value');
 ````

@@ -115,7 +115,7 @@ import {service, inject, autobind} from 'node_modules/ng-annotations';
 export default class CommunicationService {
 
 	constructor(timeout) {
-		this.timeout = $timeout;
+		this.timeout = timeout;
 		this.loop();
 	}
 

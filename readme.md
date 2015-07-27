@@ -46,12 +46,72 @@ export default class theController {
 	}
 }
 ````
-
 ------------
 
 ### Informations
 > All the examples below will show you the webpack way.  
 > However, an implementation of the angular todolist with the basic es6 syntax is available in the [example/es6](./example/es6) folder 
+
+
+### How it works:
+> all component annotations add 3 properties and 1 method to the given class  
+> `$type`:   String.  the component type (controller, config, service...). Used by the `autodeclare` method.  
+> `$name`:  String. the component name used by angular. Used by the `autodeclare` method. 
+> Useful if you want to use the import system with the dependency injection system.
+> With this method you'll avoid all hypothetical naming issues.
+
+````javascript
+/*file1.js*/
+import {service} from 'node_modules/ng-annotations';
+
+@service()
+export default class MyService {}
+
+
+/*file2.js*/
+import {controller, inject} from 'node_modules/ng-annotations';
+
+import {$name as myService} from './file1';
+
+@controller()
+@inject(myService)
+export default class MyController {}
+````
+
+> `$component`: Object. the object/function used by angular, can be different than the original class (function wrap). Used by the `autodeclare` method.  
+> `autodeclare`: Function(**ngModule**). declares the current component to angular. (replaces the traditional `angular.module('...').controller('name', fn)`)  
+> the ngModule parameter can be a string (angular module name) or an angular module instance.  
+ 
+````javascript
+/*autodeclare way*/
+import myService from './file1';
+import myController from './file2';
+
+var app = angular.module('app', []);
+// useful if you wanna use the import system with the module dependency injection system.
+export app.name; 
+
+[myService, myController].forEach(component => component.autodeclare(app));
+
+/*alternative*/
+import myService from './file1';
+import myController from './file2';
+
+var app = angular.module('app', []);
+export app.name; // useful if you wanna use the import system with the module dependency injection system.
+
+app.service(myService.$name, myService.$component);
+app.controller(myController.$name, myController.$component);
+
+/*without import*/
+import {service} from 'node_modules/ng-annotations';
+
+@service()
+class MyService {}
+
+MyService.autodeclare('moduleName');
+````
+
 
 ### Available annotations
 ------------
@@ -128,65 +188,6 @@ export default class CommunicationService {
 ````
 
 ------------
-
-## Note:
-> all component annotations add 3 properties and 1 method to the given class  
-> `$type`:   String.  the component type (controller, config, service...). Used by the `autodeclare` method.  
-> `$name`:  String. the component name used by angular. Used by the `autodeclare` method. 
-> Useful if you want to use the import system with the dependency injection system.
-> With this method you'll avoid all hypothetical naming issues.
-
-````javascript
-/*file1.js*/
-import {service} from 'node_modules/ng-annotations';
-
-@service()
-export default class MyService {}
-
-
-/*file2.js*/
-import {controller, inject} from 'node_modules/ng-annotations';
-
-import {$name as myService} from './file1';
-
-@controller()
-@inject(myService)
-export default class MyController {}
-````
-
-> `$component`: Object. the object/function used by angular, can be different than the original class (function wrap). Used by the `autodeclare` method.  
-> `autodeclare`: Function(**ngModule**). declares the current component to angular. (replaces the traditional `angular.module('...').controller('name', fn)`)  
-> the ngModule parameter can be a string (angular module name) or an angular module instance.  
- 
-````javascript
-/*autodeclare way*/
-import myService from './file1';
-import myController from './file2';
-
-var app = angular.module('app', []);
-// useful is you want to use the import system with the module dependency injection system.
-export app.name; 
-
-[myService, myController].forEach(component => component.autodeclare(app));
-
-/*alternative*/
-import myService from './file1';
-import myController from './file2';
-
-var app = angular.module('app', []);
-export app.name; // useful if you wanna use the import system with the module dependency injection system.
-
-app.service(myService.$name, myService.$component);
-app.controller(myController.$name, myController.$component);
-
-/*without import*/
-import {service} from 'node_modules/ng-annotations';
-
-@service()
-class MyService {}
-
-MyService.autodeclare('moduleName');
-````
 
 ## Components
 

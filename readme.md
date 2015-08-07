@@ -71,7 +71,8 @@ export default class MyService {}
 /*file2.js*/
 import {controller, inject} from 'node_modules/ng-annotations';
 
-import {$name as myService} from './file1';
+// import {$name as myService} from './file1'; //before 0.1.6
+import myService from './file1';
 
 @controller()
 @inject(myService)
@@ -125,15 +126,16 @@ MyService.autodeclare('moduleName');
 #### type: *function*
 #### target: *class and methods*
 #### Params:
- - **depsToInject**:    String|String[].   component(s) to inject
+ - **depsToInject**:    String|String[]|Component[]|Component.   component(s) to inject
  - **...otherDeps**: *(Optional)* ...Strings.
 
 #### Usage:
 ````javascript
 import {inject, service} from 'node_modules/ng-annotations';
+import myFactory from '../factory';
 
 @service()
-@inject('$http','$q') // could be @inject(['$http','$q'])
+@inject('$http','$q',myFactory) // could be @inject(['$http','$q',myFactory])
 export default class CommunicationService {
 	constructor(http, $q) {
 		this.http = http;

@@ -15,6 +15,11 @@ export default function inject(toInject, ...more) {
 			toInject = toInject.concat(more);
 	}
 
+	toInject.forEach((component, index) => {
+		if(component instanceof Object && '$name' in component)
+			toInject[index] = component.$name;
+	});
+
 	return (target, ...options) => {
 
 		if(options.length > 0)

@@ -1,6 +1,5 @@
 {
   "name": "ng-annotations",
-  "version": "0.1.0",
   "homepage": "https://github.com/PillowPillow/ng-annotations",
   "authors": [
     "Nicolas Gaignoux <gaignoux.nicolas@gmail.com>"
@@ -12,6 +11,15 @@
     "decorator",
     "annotation",
     "wrapper"
+  ],
+  "ignore": [
+	"src",
+	"node_modules",
+	"webpack",
+	"bower_components",
+	"gruntfile.js",
+	".gitignore",
+	".gitattributes"
   ],
   "license": "MIT"
 }

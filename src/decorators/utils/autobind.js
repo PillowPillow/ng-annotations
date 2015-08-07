@@ -11,7 +11,6 @@ export default function autobind(props, name, descriptor) {
 
 	if(typeof fn !== 'function')
 		throw Error(`@autobind decorator can only be applied to methods not: ${typeof fn}`);
-
 	return {
 		configurable: true,
 		get: function get() {

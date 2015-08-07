@@ -1,6 +1,6 @@
 import {controller, inject} from 'src/app';
 
-import {$name as todos} from '../factories/todos';
+import todos from '../factories/todos';
 
 @controller()
 @inject(todos, '$filter')

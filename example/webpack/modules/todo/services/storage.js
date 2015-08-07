@@ -1,6 +1,6 @@
 import {service, inject} from 'src/app';
 
-import {$name as STORAGE_CONST} from '../constants/storage';
+import STORAGE_CONST from '../constants/storage';
 
 @service()
 @inject(STORAGE_CONST)

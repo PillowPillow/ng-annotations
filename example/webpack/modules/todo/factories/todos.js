@@ -1,6 +1,6 @@
 import {factory, inject} from 'src/app';
 
-import {$name as storage} from '../services/storage';
+import storage from '../services/storage';
 
 @factory('todos')
 @inject(storage)

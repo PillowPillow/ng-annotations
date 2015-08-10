@@ -23,6 +23,11 @@ export default class NgDecoratorUtils {
 		});
 	}
 
+	static applyTransformations(component, instance, injections) {
+		var transformations = instance.$transform || [];
+		transformations.forEach(transformation => transformation(instance, component, injections));
+	}
+
 	static defineComponent(target, name, type, component) {
 
 		if(!~this.angularComponents.indexOf(type))

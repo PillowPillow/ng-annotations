@@ -1,4 +1,5 @@
 section.todoapp
+
 	header.header
 		h1 Todos
 		form.todo-form(ng-submit="TodoList.add()")
@@ -7,6 +8,7 @@ section.todoapp
 	section.main(ng-show="TodoList.todos.length > 0", ng-cloak)
 		input.toggle-all(type="checkbox", ng-checked="TodoList.allChecked", ng-click="TodoList.markAll()")
 		label(for="toggle-all") Mark all as complete
+
 		ul.todo-list
 			li(
 			ng-repeat="todo in TodoList.todos | filter:TodoList.statusFilter track by $index",

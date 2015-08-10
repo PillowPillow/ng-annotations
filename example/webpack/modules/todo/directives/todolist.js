@@ -1,6 +1,6 @@
 import {directive} from 'src/app';
 
-import todolistCtrl from '../controllers/todolist';
+import {$name as todolistCtrl} from '../controllers/todolist';
 import tplRenderer from '../templates/todolist.jade';
 
 @directive('todoList')

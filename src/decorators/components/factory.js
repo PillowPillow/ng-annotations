@@ -17,6 +17,7 @@ export default function NgFactory(name = '') {
 
 		var component = function(...injections) {
 			let factory = new target(...injections);
+			utils.applyTransformations(target, factory, injections);
             return factory.expose instanceof Function ? factory.expose() : factory;
 		}
 

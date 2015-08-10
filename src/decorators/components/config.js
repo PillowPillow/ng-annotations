@@ -15,7 +15,9 @@ export default function NgConfig() {
 	return (target) => {
 
 		var component = function(...injections) {
-            let config = new target(...injections);
+			let config = new target(...injections);
+			utils.applyTransformations(target, config, injections);
+            return config;
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

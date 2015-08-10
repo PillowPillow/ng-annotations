@@ -20,6 +20,7 @@ export default function NgFilter(name = '') {
 
 			if(!(filter.$filter instanceof Function))
 				throw Error('an annotated "filter" must implement the "$filter" method');
+			utils.applyTransformations(target, filter, injections);
 
 			return (...parameters) => filter.$filter(...parameters);
 		}

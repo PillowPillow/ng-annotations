@@ -10,7 +10,7 @@ This library was build with webpack in mind but should work well with the other 
 #### Index:
 * [Installation](#install)
 * [Basic Usage](#busage)
-* [How it works](#hit)
+* [How it works](#howit)
 * [Utils](#utils):
 	* [@inject](#d_inject)
 	* [@autobind](#d_autobind)
@@ -79,7 +79,7 @@ export default class theController {
 > However, an implementation of the angular todolist with the basic es6 syntax is available in the [example/es6](./example/es6) folder 
 
 
-### <a name="hit">How it works:</a>
+### <a name="howit">How it works:</a>
 > all component annotations add 3 properties and 1 method to the given class  
 > `$type`:   String.  the component type (controller, config, service...). Used by the `autodeclare` method.  
 > `$name`:  String. the component name used by angular. Used by the `autodeclare` method. 

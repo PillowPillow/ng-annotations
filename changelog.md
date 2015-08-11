@@ -1,4 +1,4 @@
-## 0.1.7\[beta\] (2015-08-10)
+## 0.1.7 (2015-08-11)
 
 @attach  [new feature]
 > the attach decorator is now available.  
@@ -54,6 +54,55 @@ import MyFactory from './myFactory';
 export default class MyCtrl {	
 	@attach(MyFactory, 'datas')
 	datas;
+}
+````
+
+---
+
+Breaking changes:
+
+* @factory  
+
+> in order to decrease the namming issues, the `expose` method is no longer supported.  
+> use $expose instead.
+
+*before*
+````javascript
+import {factory, autobind} from 'node_modules/ng-annotations';
+
+@factory()
+export default class MyFactory {
+	items;
+
+	@autobind
+	get() { return this.items; }
+	
+	@autobind
+	load(list = []) { this.items = list; }
+
+	expose() {
+		return { load: this.load, get: this.get	}
+	}
+}
+````
+
+*after*
+````javascript
+import {factory, autobind} from 'node_modules/ng-annotations';
+
+@factory()
+export default class MyFactory {
+	items;
+
+	@autobind
+	get() { return this.items; }
+	
+	@autobind
+	load(list = []) { this.items = list; }
+
+	$expose() {
+		return { load: this.load, get: this.get	}
+	}
 }
 ````
 

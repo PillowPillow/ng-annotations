@@ -27,6 +27,7 @@ This library was build with webpack in mind but should work well with the other 
 * [Wrappers](#wrappers):
 	* [constant](#d_constant)
 	* [value](#d_value)
+* [Modify and build](#modifBuild)
 
 
 
@@ -561,7 +562,7 @@ export default value('name', 'a value');
 ````
 
 
-### Modify and build
+### <a name="modifBuild">Modify and build</a>
 --------------------
 
 `npm install webpack-dev-server -g`  

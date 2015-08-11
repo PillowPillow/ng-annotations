@@ -1,7 +1,7 @@
 ## 0.1.7\[beta\] (2015-08-10)
 
 @attach  [new feature]
-> the attach decorator is now available.
+> the attach decorator is now available.  
 > it provides a shortcut to bind references across components.
 
 Specs:
@@ -60,7 +60,7 @@ export default class MyCtrl {
 ## 0.1.6 (2015-08-07)
 
 @inject  
-> Now supports the annotated component injections.
+> Now supports the annotated component injections.  
 > You no longer need to extract the name property to inject a component.
 
 *before*  

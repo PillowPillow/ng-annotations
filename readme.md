@@ -399,7 +399,7 @@ export default class MyFactory {
 		this.items = list;
 	}
 	
-	expose() {
+	$expose() {
 		return {
 			load: this.load,
 			get: this.get

@@ -1,3 +1,5 @@
+import utils from 'src/libs/utils';
+
 /**
  * @decorator: @attach
  * @type: function
@@ -28,9 +30,11 @@ export default function attach(source = 'this', path = '') {
 		if(source instanceof Object)
 			source = source.$name;
 
-		if(prototype.$transform === undefined
-		|| !(prototype.$transform instanceof Array))
-			prototype.$transform = [];
+		let $transformKey = utils.getIdentifier('$transform');
+
+		if(prototype[$transformKey] === undefined
+		|| !(prototype[$transformKey] instanceof Array))
+			prototype[$transformKey] = [];
 
 		let steps = path.split('.'),
 			propertyName = steps.pop();
@@ -41,7 +45,7 @@ export default function attach(source = 'this', path = '') {
 			setDescriptor(source,steps,propertyName,descriptor);
 		}
 		else
-			prototype.$transform.push(getApplyTransformation(source,steps,propertyName,name));
+			prototype[$transformKey].push(getApplyTransformation(source,steps,propertyName,name));
 	}
 }
 

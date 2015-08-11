@@ -14,8 +14,8 @@ This library was build with webpack in mind but should work well with the other 
 * [Utils](#utils):
 	* [@inject](#d_inject)
 	* [@autobind](#d_autobind)
-* [Components](#components):
 	* [@attach](#d_attach)
+* [Components](#components):
 	* [@controller](#d_controller)
 	* [@service](#d_service)
 	* [@factory](#d_factory)

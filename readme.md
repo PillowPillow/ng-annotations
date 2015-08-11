@@ -9,7 +9,7 @@ This library was build with webpack in mind but should work well with the other 
 
 #### Index:
 * [Installation](#install)
-* [Basic Usage](#usage)
+* [Basic Usage](#busage)
 * [How it works](#hit)
 * [Utils](#utils):
 	* [@inject](#d_inject)
@@ -39,7 +39,7 @@ This library was build with webpack in mind but should work well with the other 
 `bower install --save ng-annotations`  
 
 ------------
-### <a name="usage">Basic Usage</a>
+### <a name="busage">Basic Usage</a>
 > all examples in this repo and below use the [babel-core](https://babeljs.io/) library as transpiler
 > you're free to use any other if it supports the es7 decorator feature.
 

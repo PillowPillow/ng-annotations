@@ -7,14 +7,40 @@ This library was build with webpack in mind but should work well with the other 
 
 ------------
 
-### Installation
+#### Index:
+* [Installation](#install)
+* [Basic Usage](#busage)
+* [How it works](#howit)
+* [Utils](#utils):
+	* [@inject](#d_inject)
+	* [@autobind](#d_autobind)
+	* [@attach](#d_attach)
+* [Components](#components):
+	* [@controller](#d_controller)
+	* [@service](#d_service)
+	* [@factory](#d_factory)
+	* [@directive](#d_directive)
+	* [@animation](#d_animation)
+	* [@config](#d_config)
+	* [@run](#d_run)
+	* [@filter](#d_filter)
+* [Wrappers](#wrappers):
+	* [constant](#d_constant)
+	* [value](#d_value)
+* [Modify and build](#modifBuild)
+
+
+
+------------
+
+### <a name="install">Installation</a>
 #### `npm`
 `npm install --save ng-annotations`  
 #### `Bower`
 `bower install --save ng-annotations`  
 
 ------------
-### Basic Usage
+### <a name="busage">Basic Usage</a>
 > all examples in this repo and below use the [babel-core](https://babeljs.io/) library as transpiler
 > you're free to use any other if it supports the es7 decorator feature.
 
@@ -53,7 +79,7 @@ export default class theController {
 > However, an implementation of the angular todolist with the basic es6 syntax is available in the [example/es6](./example/es6) folder 
 
 
-### How it works:
+### <a name="howit">How it works:</a>
 > all component annotations add 3 properties and 1 method to the given class  
 > `$type`:   String.  the component type (controller, config, service...). Used by the `autodeclare` method.  
 > `$name`:  String. the component name used by angular. Used by the `autodeclare` method. 
@@ -117,9 +143,9 @@ MyService.autodeclare('moduleName');
 ### Available annotations
 ------------
 
-## Utils
+## <a name="utils">Utils</a>
 
-###`@inject`
+### <a name="d_inject">`@inject`</a>
 > The inject annotation replaces the classical array syntax for declare a dependency injection  
 > Basically, it will feed the $inject property with the list of dependencies
 
@@ -137,9 +163,10 @@ import myFactory from '../factory';
 @service()
 @inject('$http','$q',myFactory) // could be @inject(['$http','$q',myFactory])
 export default class CommunicationService {
-	constructor(http, $q) {
+	constructor(http, $q, factory) {
 		this.http = http;
 		this.promise = $q;
+		this.factory = factory;
 	}
 	do() {/*do something*/}
 }
@@ -162,7 +189,7 @@ export default class CommunicationService {
 }
 ````
 
-###`@autobind`
+###<a name="d_autobind">`@autobind`<a>
 > The autobind annotation gives the possibility to bind methods to its current context.  
 > similar to *object.method.bind(object)*
 
@@ -189,11 +216,67 @@ export default class CommunicationService {
 }
 ````
 
+###<a name="d_attach">`@attach`</a>
+> The attach annotation provides a shortcut to bind references across components and keep them safe.
+
+#### type: *function*
+#### target: *attributes and methods*
+#### Params:
+ - **source**   String|Component. source component
+    - "this" will target the current component
+ - **path**:    *(Optional)* String. path toward the property
+	- split with dots. `obj.otherObj.myProperty`
+
+####Usage:
+
+````javascript
+// factories/user.js
+import {factory, inject} from 'node_modules/ng-annotations';
+
+@factory()
+@inject('$http')
+export default class User {
+	constructor() {
+		this.nested.property = 5;
+	}
+	connectedUsers = 0;
+	this.users = [];
+	load() {
+		this.$http.get('...').success(userlist => this.users = userlist)
+	}
+}
+
+
+// controller/user.js
+import {inject,controller,attach} from 'node_modules/ng-annotations';
+import UserFactory from '../factories/user.js';
+
+@controller()
+@inject(UserFactory)
+class FooBarController {
+	@attach(UserFactory, 'users') // this.userlist will refers to UserFactory.users
+	userlist;
+
+	@attach(UserFactory, 'nested.property')
+	randomProperty;
+
+	@attach(UserFactory, 'load') // same as this.reload = factory.load.bind(factory);
+	reload;
+	
+	clearUsers() {
+		this.users = []; // update the UserFactory.users property, the reference is kept.
+	}
+}
+````
+
+#### Note:
+> binded target can be a function, a primitive or an object
+
 ------------
 
-## Components
+## <a name="components">Components</a>
 
-###`@controller`
+###<a name="d_controller">`@controller`</a>
 > declare the given class as an angular controller
 
 #### type: *function*
@@ -222,7 +305,7 @@ html
 		script(src="app.js")
 ````
 
-###`@service`
+###<a name="d_service">`@service`</a>
 > declare the given class as an angular service
 
 #### type: *function*
@@ -258,7 +341,7 @@ export default class MyProvider {
 }
 ````
 
-###`@factory`
+###<a name="d_factory">`@factory`</a>
 > declare the given class as an angular factory
 
 #### type: *function*
@@ -308,7 +391,7 @@ export default class MyFactory {
 		this.items = list;
 	}
 	
-	expose() {
+	$expose() {
 		return {
 			load: this.load,
 			get: this.get
@@ -330,7 +413,7 @@ angular.module('...')
 	})
 ````
 
-###`@directive`
+###<a name="d_directive">`@directive`</a>
 > declare the given class as an angular directive
 
 #### type: *function*
@@ -351,7 +434,7 @@ export default class MyDirective {
 }
 ````
 
-###`@animation`
+###<a name="d_animation">`@animation`</a>
 > declare the given class as an angular animation
 
 #### type: *function*
@@ -376,7 +459,7 @@ export default class FoobarAnimation {
 }
 ````
 
-###`@config`
+###<a name="d_config">`@config`</a>
 > declare the given class as an angular config
 
 #### type: *function*
@@ -400,7 +483,7 @@ export default class FooBarConfiguration {
 }
 ````
 
-###`@run`
+###<a name="d_run">`@run`</a>
 > declare the given class as an angular run
 
 #### type: *function*
@@ -424,7 +507,7 @@ export default class SomeRun {
 }
 ````
 
-###`@filter`
+###<a name="d_filter">`@filter`</a>
 > declare the given class as an angular filter
 
 #### type: *function*
@@ -451,11 +534,11 @@ export default class Capitalize {
 }
 ````
 
-## Wrappers
+## <a name="wrappers">Wrappers</a>
 > the *Value* and *Constant* components can't be replaced by a class.  
 > In order to simplify their declaration two wrappers are available.
 
-###`constant`
+###<a name="d_constant">`constant`</a>
 #### Params:
  - **name**:    String.   constant name.
  - **value**:    Mix.   constant value.
@@ -466,7 +549,7 @@ import {constant} from 'node_modules/ng-annotations';
 
 export default constant('name', 'a constant');
 ````
-###`value`
+###<a name="d_value">`value`</a>
 #### Params:
  - **name**:    String.   value name.
  - **value**:    Mix.   value value.
@@ -479,7 +562,7 @@ export default value('name', 'a value');
 ````
 
 
-### Modify and build
+### <a name="modifBuild">Modify and build</a>
 --------------------
 
 `npm install webpack-dev-server -g`  

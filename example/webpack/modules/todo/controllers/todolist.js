@@ -1,4 +1,4 @@
-import {controller, inject} from 'src/app';
+import {controller, inject, attach} from 'src/app';
 
 import todos from '../factories/todos';
 
@@ -11,13 +11,15 @@ export default class TodoList {
 	editedTodo = null;
 	originalTodo = null;
 
+	@attach(todos, 'todos')
+	todos;
+	//get todos() {
+	//	return this._todoFactory.todos;
+	//}
+
 	constructor(todoFactory, $filter) {
 		this._todoFactory = todoFactory;
 		this._filter = $filter('filter');
-	}
-
-	get todos() {
-		return this._todoFactory.todos;
 	}
 
 	get allChecked() {
@@ -55,9 +57,11 @@ export default class TodoList {
 		this.originalTodo = angular.extend({}, todo);
 	}
 
-	remove(todo) {
-		this._todoFactory.remove(todo);
-	}
+	@attach(todos, 'remove')
+	remove;
+	//remove(todo) {
+	//	this._todoFactory.remove(todo);
+	//}
 
 	doneEditing(todo) {
 		this.editedTodo = null;
@@ -65,9 +69,11 @@ export default class TodoList {
 		!todo.title && this._todoFactory.remove(todo);
 	}
 
-	statusEdited() {
-		this._todoFactory.update();
-	}
+	@attach(todos, 'update')
+	statusEdited;
+	//statusEdited() {
+	//	this._todoFactory.update();
+	//}
 
 	revert(todo) {
 		let index = this.todos.indexOf(todo);

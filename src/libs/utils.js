@@ -3,11 +3,27 @@ export default class NgDecoratorUtils {
 	static regexArgs = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 	static regexStripComment = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 	static angularComponents = ['config','run','value','constant','animation','controller','directive','factory','provider','service','filter'];
+	static identifiers = {};
 
 	static extractParameters(fn) {
 		var fnText = fn.toString().replace(this.regexStripComment, ''),
 			args = fnText.match(this.regexArgs);
 		return args && args[1].length > 0? args[1].split(',') : [];
+	}
+
+	static getUUID(pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx') {
+		return pattern.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	}
+
+	static getIdentifier(key) {
+
+		if(this.identifiers[key] === undefined)
+			this.identifiers[key] = Symbol ? Symbol(key) : this.getUUID();
+
+		return this.identifiers[key];
 	}
 
 	static addDeclareMethod(target) {
@@ -21,6 +37,12 @@ export default class NgDecoratorUtils {
 				return ngModule[this.$type](...params);
 			}
 		});
+	}
+
+	static applyTransformations(component, instance = {}, injections = []) {
+		let $transformKey = this.getIdentifier('$transform'),
+			transformations = instance[$transformKey] || [];
+		transformations.forEach(transformation => transformation(instance, component, injections));
 	}
 
 	static defineComponent(target, name, type, component) {

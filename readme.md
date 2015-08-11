@@ -137,9 +137,10 @@ import myFactory from '../factory';
 @service()
 @inject('$http','$q',myFactory) // could be @inject(['$http','$q',myFactory])
 export default class CommunicationService {
-	constructor(http, $q) {
+	constructor(http, $q, factory) {
 		this.http = http;
 		this.promise = $q;
+		this.factory = factory;
 	}
 	do() {/*do something*/}
 }
@@ -188,6 +189,96 @@ export default class CommunicationService {
 	}
 }
 ````
+
+###`@attach`
+> The attach annotation provides a shortcut to bind references across components and keep them safe.
+
+#### type: *function*
+#### target: *attribute and methods*
+#### Params:
+ - **source**   String|Component. source component
+    - "this" will target the current component
+ - **path**:    *(Optional)* String. path toward the property
+	- split with dots. `obj.otherObj.myProperty`
+
+####Usage:
+
+````javascript
+import {factory, inject} from 'node_modules/ng-annotations';
+
+@factory()
+@inject('$http')
+export default class User {
+	constructor() {
+		this.nested.property = 5;
+	}
+	connectedUsers = 0;
+	this.users = [];
+	load() {
+		this.$http.get('...').success(userlist => this.users = userlist)
+	}
+}
+````
+
+Basic binding:
+````javascript
+import {inject,controller,attach} from 'node_modules/ng-annotations';
+import UserFactory from '../factories/user.js';
+
+@controller()
+@inject(UserFactory)
+class FooBarController {
+	@attach(UserFactory, 'users')
+	userlist;
+}
+````
+> The userlist property will binded to the UserFactory `users` property.  
+> The created reference is not affected by the reference erasing.
+
+Nested property binding:
+````javascript
+import {inject,controller,attach} from 'node_modules/ng-annotations';
+import UserFactory from '../factories/user.js';
+
+@controller()
+@inject(UserFactory)
+class FooBarController {
+	@attach(UserFactory, 'nested.property')
+	randomProperty;
+}
+````
+
+> The userlist property will binded to the UserFactory `users` property.  
+> The created reference is not affected by the reference erasing.
+
+Binding function:
+````javascript
+import {inject,controller,attach} from 'node_modules/ng-annotations';
+import UserFactory from '../factories/user.js';
+
+@controller()
+@inject(UserFactory)
+class FooBarController {
+	@attach(UserFactory, 'load')
+	reload;
+}
+````
+> when you bind a function with the `@attach` annotation, its initial context is kept.
+
+Binding on primitive type:
+````javascript
+import {inject,controller,attach} from 'node_modules/ng-annotations';
+import UserFactory from '../factories/user.js';
+
+@controller()
+@inject(UserFactory)
+class FooBarController {
+	@attach(UserFactory, 'connectedUsers')
+	nbConnected;
+}
+````
+> The attach decorator doesn't care about the property type.  
+> You can use it on a primitive type, it will create a reference too.  
 
 ------------
 

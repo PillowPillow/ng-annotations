@@ -272,6 +272,10 @@ class FooBarController {
 #### Note:
 > binded target can be a function, a primitive or an object
 
+#### Warning:
+> The binding occurs after the constructor calling, so you can't use the property at this step. use the controller parameters instead.
+
+
 ------------
 
 ## <a name="components">Components</a>

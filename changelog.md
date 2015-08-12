@@ -1,7 +1,27 @@
+## 0.1.9 (2015-08-12)
+
+Bugfix:
+* @attach  
+
+> now supports correctly the bindings without second parameter  
+
+````javascript
+import {controller, inject} from 'node_modules/ng-annotations';
+import MyFactory from './myFactory';
+
+@controller()
+@inject(MyFactory)
+export default class MyCtrl {
+	@attach(MyFactory)
+	factory;
+}
+````
+
 ## 0.1.8 (2015-08-12)
 
 Bugfix:
-* @inject
+* @inject  
+
 > now injects correctly the dependencies with the services and providers components
 
 ## 0.1.7 (2015-08-11)

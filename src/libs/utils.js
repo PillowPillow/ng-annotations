@@ -67,5 +67,11 @@ export default class NgDecoratorUtils {
 				configurable: true
 			}
 		});
+
+		if(target.$component instanceof Object)
+			Object.defineProperty(target.$component, '$inject', {
+				get: () => target.$inject || [],
+				set: (val) => target.$inject = val
+			});
 	}
 }

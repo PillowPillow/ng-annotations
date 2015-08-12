@@ -1,3 +1,9 @@
+## 0.1.8 (2015-08-12)
+
+Bugfix:
+* @inject
+> now injects correctly the dependencies with the services and providers components
+
 ## 0.1.7 (2015-08-11)
 
 @attach  [new feature]

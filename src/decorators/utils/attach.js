@@ -83,12 +83,16 @@ function setDescriptor(source, steps, property, descriptor, context = undefined)
 	descriptor.get = function() {
 		if(context === undefined)
 			context = this;
+		if(!property)
+			return context;
 		let src = getSrc(context, steps);
 		return src[property] instanceof Function ? src[property].bind(src) : src[property];
 	};
 	descriptor.set = function(val) {
 		if(context === undefined)
 			context = this;
+		if(!property)
+			return context;
 		let src = getSrc(context, steps);
 		src[property] = val;
 	};

@@ -1,6 +1,7 @@
 import {service, autobind, inject} from '../../src/app';
 import app from './index';
 
+@inject('$http')
 @service()
 export class FooBarService {
 

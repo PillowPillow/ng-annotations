@@ -25,8 +25,6 @@ export default function NgConfig() {
 			if(parameters.length > 0)
 				inject(parameters)(component);
 		}
-		else inject(target.$inject)(component);
-
 
 		utils.addDeclareMethod(target);
 		utils.defineComponent(target, null, 'config', component);

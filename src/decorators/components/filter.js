@@ -30,8 +30,6 @@ export default function NgFilter(name = '') {
 			if(parameters.length > 0)
 				inject(parameters)(component);
 		}
-		else inject(target.$inject)(component);
-
 
 		utils.addDeclareMethod(target);
 		utils.defineComponent(target, name, 'filter', component);

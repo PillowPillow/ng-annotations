@@ -15,9 +15,9 @@ export default function NgRun() {
 	return (target) => {
 
 		var component = function(...injections) {
-			let run = new target(...injections);
-			utils.applyTransformations(target, run, injections);
-            return run;
+			let instance = new target(...injections);
+			utils.applyTransformations(target, instance, injections);
+            return utils.getFinalComponent(target, instance);
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

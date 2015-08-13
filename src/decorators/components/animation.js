@@ -16,9 +16,9 @@ export default function NgAnimation(name = '') {
 		name = name || target.name;
 
 		var component = function(...injections) {
-			let animation = new target(...injections);
-			utils.applyTransformations(target, animation, injections);
-            return animation;
+			let instance = new target(...injections);
+			utils.applyTransformations(target, instance, injections);
+            return utils.getFinalComponent(target, instance);
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

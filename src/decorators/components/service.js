@@ -16,9 +16,9 @@ export default function NgService(name = '') {
 		name = name || target.name;
 
 		var component = function(...injections) {
-			let service = new target(...injections);
-			utils.applyTransformations(target, service, injections);
-            return service;
+			let instance = new target(...injections);
+			utils.applyTransformations(target, instance, injections);
+            return utils.getFinalComponent(target, instance);
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

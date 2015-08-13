@@ -16,9 +16,9 @@ export default function NgProvider(name = '') {
 		name = name || target.name;
 
 		var component = function(...injections) {
-			let provider = new target(...injections);
-			utils.applyTransformations(target, provider, injections);
-            return provider;
+			let instance = new target(...injections);
+			utils.applyTransformations(target, instance, injections);
+            return utils.getFinalComponent(target, instance);
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

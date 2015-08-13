@@ -16,9 +16,9 @@ export default function NgDirective(name = '') {
 		name = name || target.name;
 
 		var component = function(...injections) {
-			let directive = new target(...injections);
-			utils.applyTransformations(target, directive, injections);
-            return directive;
+			let instance = new target(...injections);
+			utils.applyTransformations(target, instance, injections);
+            return utils.getFinalComponent(target, instance);
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

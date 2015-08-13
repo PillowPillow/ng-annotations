@@ -16,9 +16,9 @@ export default function NgController(name = '') {
 		name = name || target.name;
 
 		var component = function(...injections) {
-			let controller = new target(...injections);
-			utils.applyTransformations(target, controller, injections);
-            return controller;
+			let instance = new target(...injections);
+			utils.applyTransformations(target, instance, injections);
+            return utils.getFinalComponent(target, instance);
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

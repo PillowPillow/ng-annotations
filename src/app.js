@@ -19,5 +19,6 @@ NgAnnotations.value = require('src/wrappers/value');
 NgAnnotations.inject = require('src/decorators/utils/inject');
 NgAnnotations.autobind = require('src/decorators/utils/autobind');
 NgAnnotations.attach = require('src/decorators/utils/attach');
+NgAnnotations.conceal = require('src/decorators/utils/conceal');
 
 export default window.ngAnnotations = NgAnnotations;

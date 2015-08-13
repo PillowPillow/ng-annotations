@@ -2,13 +2,13 @@ export default class NgDecoratorUtils {
 
 	static regexArgs = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
 	static regexStripComment = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-	static angularComponents = ['config','run','value','constant','animation','controller','directive','factory','provider','service','filter'];
+	static angularComponents = ['config', 'run', 'value', 'constant', 'animation', 'controller', 'directive', 'factory', 'provider', 'service', 'filter'];
 	static identifiers = {};
 
 	static extractParameters(fn) {
 		var fnText = fn.toString().replace(this.regexStripComment, ''),
-			args = fnText.match(this.regexArgs);
-		return args && args[1].length > 0? args[1].split(',') : [];
+		args = fnText.match(this.regexArgs);
+		return args && args[1].length > 0 ? args[1].split(',') : [];
 	}
 
 	static getUUID(pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx') {
@@ -41,8 +41,46 @@ export default class NgDecoratorUtils {
 
 	static applyTransformations(component, instance = {}, injections = []) {
 		let $transformKey = this.getIdentifier('$transform'),
-			transformations = instance[$transformKey] || [];
+		transformations = instance[$transformKey] || [];
 		transformations.forEach(transformation => transformation(instance, component, injections));
+	}
+
+	static getFinalComponent(target, instance) {
+
+		let $privateKey = this.getIdentifier('$private'),
+			privateProperties = target.prototype[$privateKey] || [];
+
+		if(privateProperties.length === 0)
+			return instance;
+
+		privateProperties.push('constructor');
+
+		let properties = Object.getOwnPropertyNames(target.prototype),
+		publicProperties = properties.filter(property => !~privateProperties.indexOf(property)),
+		exposed = {};
+
+		publicProperties.forEach(property => {
+
+			exposed[property] = (...parameters) => accessor(instance, ...parameters);
+			Object.defineProperties(exposed[property], {
+				call: {
+					value: (scope, ...parameters) => accessor(scope, ...parameters),
+					writable: false,
+					enumerable: false
+				},
+				apply: {
+					value: (scope, parameters = []) => accessor(scope, ...parameters),
+					writable: false,
+					enumerable: false
+				}
+			});
+		});
+
+		return exposed;
+
+		function accessor(scope, ...parameters) {
+			return instance[property].apply(scope, parameters);
+		}
 	}
 
 	static defineComponent(target, name, type, component) {

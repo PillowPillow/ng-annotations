@@ -18,14 +18,6 @@ export default class NgDecoratorUtils {
 		});
 	}
 
-	static arrayUnique(arr = []) {
-		var ret = [arr[0]];
-		for(var i = 1; i < arr.length; i++)
-			if(arr[i - 1] !== arr[i])
-				ret.push(arr[i]);
-		return ret;
-	}
-
 	static getIdentifier(key) {
 
 		if(this.identifiers[key] === undefined)
@@ -49,55 +41,46 @@ export default class NgDecoratorUtils {
 
 	static applyTransformations(component, instance = {}, injections = []) {
 		let $transformKey = this.getIdentifier('$transform'),
-		transformations = component.prototype[$transformKey] || [];
+		transformations = instance[$transformKey] || [];
 		transformations.forEach(transformation => transformation(instance, component, injections));
 	}
 
 	static getFinalComponent(target, instance) {
 
 		let $privateKey = this.getIdentifier('$private'),
-		privateProperties = target.prototype[$privateKey] || [];
+			privateProperties = target.prototype[$privateKey] || [];
 
 		if(privateProperties.length === 0)
 			return instance;
 
 		privateProperties.push('constructor');
-		let prototypeProperties = Object.getOwnPropertyNames(target.prototype),
-		instanceProperties = Object.getOwnPropertyNames(instance);
 
-		let properties = this.arrayUnique(prototypeProperties.concat(instanceProperties)),
+		let properties = Object.getOwnPropertyNames(target.prototype),
 		publicProperties = properties.filter(property => !~privateProperties.indexOf(property)),
 		exposed = {};
 
 		publicProperties.forEach(property => {
-			if(instance[property] instanceof Function) {
-				exposed[property] = (...parameters) => instance[property](...parameters);
-				Object.defineProperties(exposed[property], {
-					call: {
-						value: (scope, ...parameters) => {
-							console.log(property);
-							instance[property].apply(scope, parameters)},
-						writable: false,
-						enumerable: false
-					},
-					apply: {
-						value: (scope, parameters = []) => {
-							console.log(property);
-							instance[property].apply(scope, parameters)},
-						writable: false,
-						enumerable: false
-					}
-				});
-			}
-			else
-				Object.defineProperty(exposed, property, {
-					get: () => instance[property],
-					set: (val) => instance[property] = val,
+
+			exposed[property] = (...parameters) => accessor(instance, ...parameters);
+			Object.defineProperties(exposed[property], {
+				call: {
+					value: (scope, ...parameters) => accessor(scope, ...parameters),
+					writable: false,
 					enumerable: false
-				});
+				},
+				apply: {
+					value: (scope, parameters = []) => accessor(scope, ...parameters),
+					writable: false,
+					enumerable: false
+				}
+			});
 		});
 
 		return exposed;
+
+		function accessor(scope, ...parameters) {
+			return instance[property].apply(scope, parameters);
+		}
 	}
 
 	static defineComponent(target, name, type, component) {

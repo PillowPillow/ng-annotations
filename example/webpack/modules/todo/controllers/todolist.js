@@ -1,9 +1,9 @@
-import {controller, inject, attach, conceal} from 'src/app';
+import {controller, inject, attach} from 'src/app';
 
 import todos from '../factories/todos';
 
 @controller()
-@inject('$filter', todos)
+@inject(todos, '$filter')
 export default class TodoList {
 
 	statusFilter = {};
@@ -11,18 +11,15 @@ export default class TodoList {
 	editedTodo = null;
 	originalTodo = null;
 
-	@attach(todos)
-	@conceal
-	todoFactory;
-
-	@conceal
-	filter;
-
 	@attach(todos, 'todos')
 	todos;
+	//get todos() {
+	//	return this._todoFactory.todos;
+	//}
 
-	constructor($filter) {
-		this.filter = $filter('filter');
+	constructor(todoFactory, $filter) {
+		this._todoFactory = todoFactory;
+		this._filter = $filter('filter');
 	}
 
 	get allChecked() {
@@ -30,7 +27,7 @@ export default class TodoList {
 	}
 
 	get nbRemaining() {
-		return this.filter(this.todos, {completed: false}).length;
+		return this._filter(this.todos, {completed: false}).length;
 	}
 
 	setFilter(status) {
@@ -51,7 +48,7 @@ export default class TodoList {
 		var title = this.newTodo.trim();
 		if(!title) return;
 
-		this.todoFactory.add(title);
+		this._todoFactory.add(title);
 		this.newTodo = '';
 	}
 
@@ -62,15 +59,21 @@ export default class TodoList {
 
 	@attach(todos, 'remove')
 	remove;
+	//remove(todo) {
+	//	this._todoFactory.remove(todo);
+	//}
 
 	doneEditing(todo) {
 		this.editedTodo = null;
 		todo.title = todo.title.trim();
-		!todo.title && this.todoFactory.remove(todo);
+		!todo.title && this._todoFactory.remove(todo);
 	}
 
 	@attach(todos, 'update')
 	statusEdited;
+	//statusEdited() {
+	//	this._todoFactory.update();
+	//}
 
 	revert(todo) {
 		let index = this.todos.indexOf(todo);

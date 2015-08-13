@@ -1,8 +1,8 @@
-import {Ctrl, SafeCtrl, Serv} from './sandbox/attach';
-import module from './sandbox';
+import {Ctrl, SafeCtrl, Serv} from '../sandbox/utils/attach';
+import module from '../sandbox';
 const {mock} = angular;
 
-describe('Service', () => {
+describe('@attach', () => {
 
 	var service, $scope, ctrlBuilder, controller;
 	beforeEach(mock.module(module));

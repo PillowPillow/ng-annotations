@@ -1,5 +1,5 @@
-import {service, controller, attach, inject} from '../../src/app';
-import app from './index';
+import {service, controller, attach, inject} from '../../../src/app';
+import app from '../index';
 
 @service('attach.services.foo')
 export class Serv {

@@ -1,5 +1,5 @@
-import {service, autobind, inject} from '../../src/app';
-import app from './index';
+import {service, autobind, inject} from '../../../src/app';
+import app from '../index';
 
 @inject('$http')
 @service()

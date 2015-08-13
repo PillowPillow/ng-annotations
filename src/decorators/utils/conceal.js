@@ -9,6 +9,8 @@ export default function conceal(prototype, name, descriptor) {
 	if(name === undefined)
 		throw Error(`@isolate decorator can only be applied to methods or attributes`);
 
+	if(descriptor !== undefined)
+		descriptor.writable = true;
 
 	let $private = utils.getIdentifier('$private');
 
@@ -17,4 +19,5 @@ export default function conceal(prototype, name, descriptor) {
 		prototype[$private] = [];
 
 	prototype[$private].push(name);
+
 }

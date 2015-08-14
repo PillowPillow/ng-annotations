@@ -35,4 +35,17 @@ describe('@factory', () => {
 		expect(barfoo.bar).to.be.undefined;
 	})
 
+	it('should provide apply and call methods', function() {
+		expect(barbar.getContext.apply).to.not.be.undefined;
+		expect(barbar.getContext.call).to.not.be.undefined;
+		expect(barbar.getContext.apply).to.be.an.instanceOf(Function);
+		expect(barbar.getContext.call).to.be.an.instanceOf(Function);
+	})
+
+	it('should change the execution context', function() {
+		var scope = {foo:3};
+		expect(barbar.getContext.call(scope)).to.equal(scope);
+		expect(barbar.getContext.apply(scope)).to.equal(scope);
+	})
+
 })

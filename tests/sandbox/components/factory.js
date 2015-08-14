@@ -38,6 +38,10 @@ export class BarBarFactory {
 		this.barfoo = barfoo;
 	}
 
+	getContext() {
+		return this;
+	}
+
 	getInjection() {
 		return this.barfoo;
 	}

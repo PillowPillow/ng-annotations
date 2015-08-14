@@ -74,16 +74,12 @@ export default class NgDecoratorUtils {
 				exposed[property] = (...parameters) => instance[property](...parameters);
 				Object.defineProperties(exposed[property], {
 					call: {
-						value: (scope, ...parameters) => {
-							console.log(property);
-							instance[property].apply(scope, parameters)},
+						value: (scope = instance, ...parameters) => instance[property].apply(scope, parameters),
 						writable: false,
 						enumerable: false
 					},
 					apply: {
-						value: (scope, parameters = []) => {
-							console.log(property);
-							instance[property].apply(scope, parameters)},
+						value: (scope = instance, parameters = []) => instance[property].apply(scope, parameters),
 						writable: false,
 						enumerable: false
 					}

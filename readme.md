@@ -15,6 +15,7 @@ This library was build with webpack in mind but should work well with the other 
 	* [@inject](#d_inject)
 	* [@autobind](#d_autobind)
 	* [@attach](#d_attach)
+	* [@conceal](#d_conceal)
 * [Components](#components):
 	* [@controller](#d_controller)
 	* [@service](#d_service)
@@ -188,6 +189,40 @@ export default class CommunicationService {
 	do() {/*do something*/}
 }
 ````
+
+###<a name="d_conceal">`@conceal`<a>
+> declares the annotated property as private
+
+#### type: *statement*
+#### target: *methods and attributes*
+#### Usage:
+````javascript
+import {factory, inject, attach, conceal} from 'node_modules/ng-annotations';
+
+@factory()
+@inject('$http')
+export default class UserFactory {
+
+	@conceal
+	@attach('$http')
+	$http
+	
+	@conceal
+	datas = [];
+	
+	constructor(timeout) {
+		this.datas = [1,2,3];
+	}
+
+	method() {
+		return this.privateMethod();
+	}
+
+	@conceal
+	privateMethod() {}
+}
+````
+
 
 ###<a name="d_autobind">`@autobind`<a>
 > The autobind annotation gives the possibility to bind methods to its current context.  

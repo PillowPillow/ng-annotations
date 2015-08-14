@@ -1,3 +1,45 @@
+## 0.1.10 (2015-08-14)
+
+@conceal: [new feature]
+> the conceal decorator is now available.  
+> it provides a way to declare the class members as private.
+
+````javascript
+import {factory, inject, conceal} from 'node_modules/ng-annotations';
+
+@factory()
+@inject('$http')
+class MyFactory {
+	@conceal
+	@attach('$http')
+	$http
+	
+	@conceal
+	datas = [];
+	
+	getDatas() {
+		return this.datas;
+	}
+}
+
+
+import {service, inject} from 'node_modules/ng-annotations';
+
+@service()
+@inject(MyFactory)
+class MyService {
+
+	constructor(myFactory) {
+		myFactory.$http; // not defined
+		myFactory.datas; // not defined
+		myFactory.getDatas; // defined
+	}
+
+}
+
+
+````
+
 ## 0.1.9 (2015-08-12)
 
 Bugfix:

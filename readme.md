@@ -190,8 +190,8 @@ export default class CommunicationService {
 }
 ````
 
-###<a name="d_conceal">`@conceal`<a>
-> declares the annotated property as private
+### <a name="d_conceal">`@conceal`<a>
+> the conceal decorator provides a way to declate the annotated properties as private
 
 #### type: *statement*
 #### target: *methods and attributes*

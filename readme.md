@@ -190,40 +190,6 @@ export default class CommunicationService {
 }
 ````
 
-### <a name="d_conceal">`@conceal`<a>
-> the conceal decorator provides a way to declate the annotated properties as private
-
-#### type: *statement*
-#### target: *methods and attributes*
-#### Usage:
-````javascript
-import {factory, inject, attach, conceal} from 'node_modules/ng-annotations';
-
-@factory()
-@inject('$http')
-export default class UserFactory {
-
-	@conceal
-	@attach('$http')
-	$http
-	
-	@conceal
-	datas = [];
-	
-	constructor(timeout) {
-		this.datas = [1,2,3];
-	}
-
-	method() {
-		return this.privateMethod();
-	}
-
-	@conceal
-	privateMethod() {}
-}
-````
-
-
 ###<a name="d_autobind">`@autobind`<a>
 > The autobind annotation gives the possibility to bind methods to its current context.  
 > similar to *object.method.bind(object)*
@@ -310,7 +276,38 @@ class FooBarController {
 #### Warning:
 > The binding occurs after the constructor calling, so you can't use the property at this step. use the controller parameters instead.
 
+### <a name="d_conceal">`@conceal`<a>
+> the conceal decorator provides a way to declate the annotated properties as private
 
+#### type: *statement*
+#### target: *methods and attributes*
+#### Usage:
+````javascript
+import {factory, inject, attach, conceal} from 'node_modules/ng-annotations';
+
+@factory()
+@inject('$http')
+export default class UserFactory {
+
+	@conceal
+	@attach('$http')
+	$http
+	
+	@conceal
+	datas = [];
+	
+	constructor(timeout) {
+		this.datas = [1,2,3];
+	}
+
+	method() {
+		return this.privateMethod();
+	}
+
+	@conceal
+	privateMethod() {}
+}
+````
 ------------
 
 ## <a name="components">Components</a>

@@ -277,7 +277,7 @@ class FooBarController {
 > The binding occurs after the constructor calling, so you can't use the property at this step. use the controller parameters instead.
 
 ### <a name="d_conceal">`@conceal`<a>
-> the conceal decorator provides a way to declate the annotated properties as private
+> the conceal decorator provides a way to declare the annotated properties as private
 
 #### type: *statement*
 #### target: *methods and attributes*

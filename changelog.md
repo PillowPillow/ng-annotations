@@ -5,7 +5,7 @@ Bugfix:
 
 > now supports the stateful filters  
 
-````
+````javascript
 import {filter, inject} from 'node_modules/ng-annotations';
 
 @filter('statefulFilter')

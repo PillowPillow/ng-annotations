@@ -1,3 +1,24 @@
+## 0.1.11 (2015-08-20)
+
+Bugfix:  
+* @filter
+
+> now supports the stateful filters  
+
+````
+import {filter, inject} from 'node_modules/ng-annotations';
+
+@filter('statefulFilter')
+@inject('someDependency')
+class StatefulFilter {
+	$stateful = true;
+	$filter(input) {
+		return input; //do something with the dependency
+	}
+}
+
+````
+
 ## 0.1.10 (2015-08-14)
 
 @conceal: [new feature]

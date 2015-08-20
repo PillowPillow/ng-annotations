@@ -570,6 +570,27 @@ export default class Capitalize {
 }
 ````
 
+#### Note:
+> If you need to write a stateful filter, you have to mark the filter as `$stateful` by defining a $stateful property to true
+
+````javascript
+//inspired by https://docs.angularjs.org/guide/filter
+import {filter, inject, attach} from 'node_modules/ng-annotations';
+
+@filter('decorate')
+@inject('decoration')
+export default Decorate {
+
+	$stateful=true;
+	@attach('decoration', 'symbol')
+	decorator;
+
+	$filter(input) {
+		return this.decorator + input + this.decorator;
+	}
+}
+````
+
 ## <a name="wrappers">Wrappers</a>
 > the *Value* and *Constant* components can't be replaced by a class.  
 > In order to simplify their declaration two wrappers are available.

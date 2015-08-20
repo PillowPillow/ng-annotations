@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ng-annotations by PillowPillow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Ng-annotations</h1>
+      <h2 class="project-tagline">angular wrapper based on annotations</h2>
+      <a href="https://github.com/PillowPillow/ng-annotations" class="btn">View on GitHub</a>
+      <a href="https://github.com/PillowPillow/ng-annotations/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/PillowPillow/ng-annotations/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="ng-annotation" class="anchor" href="#ng-annotation" aria-hidden="true"><span class="octicon octicon-link"></span></a>ng-annotation</h1>
+
+<h3>
+<a id="angular-wrapper-based-on-es7-annotations" class="anchor" href="#angular-wrapper-based-on-es7-annotations" aria-hidden="true"><span class="octicon octicon-link"></span></a>angular wrapper based on es7 annotations</h3>
+
+<h1></h1>
+
+<p>Ng-annotations is a small javascript library that helps to produce more structured angular applications using es6 classes and es7 decorators.<br>
+This library was build with webpack in mind but should work well with the other transpilers/javascript supersets like babel or typescript (with es7 and es6 advanced features)</p>
+
+<hr>
+
+<h4>
+<a id="index" class="anchor" href="#index" aria-hidden="true"><span class="octicon octicon-link"></span></a>Index:</h4>
+
+<ul>
+<li><a href="#install">Installation</a></li>
+<li><a href="#busage">Basic Usage</a></li>
+<li><a href="#howit">How it works</a></li>
+<li>
+<a href="#utils">Utils</a>:
+
+<ul>
+<li><a href="#d_inject">@inject</a></li>
+<li><a href="#d_autobind">@autobind</a></li>
+<li><a href="#d_attach">@attach</a></li>
+<li><a href="#d_conceal">@conceal</a></li>
+</ul>
+</li>
+<li>
+<a href="#components">Components</a>:
+
+<ul>
+<li><a href="#d_controller">@controller</a></li>
+<li><a href="#d_service">@service</a></li>
+<li><a href="#d_factory">@factory</a></li>
+<li><a href="#d_directive">@directive</a></li>
+<li><a href="#d_animation">@animation</a></li>
+<li><a href="#d_config">@config</a></li>
+<li><a href="#d_run">@run</a></li>
+<li><a href="#d_filter">@filter</a></li>
+</ul>
+</li>
+<li>
+<a href="#wrappers">Wrappers</a>:
+
+<ul>
+<li><a href="#d_constant">constant</a></li>
+<li><a href="#d_value">value</a></li>
+</ul>
+</li>
+<li><a href="#modifBuild">Modify and build</a></li>
+</ul>
+
+<hr>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="install">Installation</a>
+</h3>
+
+<h4>
+<a id="npm" class="anchor" href="#npm" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>npm</code>
+</h4>
+
+<p><code>npm install --save ng-annotations</code>  </p>
+
+<h4>
+<a id="bower" class="anchor" href="#bower" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>Bower</code>
+</h4>
+
+<p><code>bower install --save ng-annotations</code>  </p>
+
+<hr>
+
+<h3>
+<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="busage">Basic Usage</a>
+</h3>
+
+<blockquote>
+<p>all examples in this repo and below use the <a href="https://babeljs.io/">babel-core</a> library as transpiler
+you're free to use any other if it supports the es7 decorator feature.</p>
+</blockquote>
+
+<h4>
+<a id="webpack" class="anchor" href="#webpack" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>webpack</code>
+</h4>
+
+<blockquote>
+<p>a configuration example is available in the <a href="./webpack/webpack.dev.config.js">webpack dev config</a></p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {service, inject} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">service</span>()
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>$http<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyService</span> {
+    <span class="pl-en">controller</span>(<span class="pl-smi">$http</span>) {
+        <span class="pl-c">/*do something*/</span>
+    }
+}</pre></div>
+
+<h4>
+<a id="es6-files" class="anchor" href="#es6-files" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>es6 files</code>
+</h4>
+
+<blockquote>
+<p>a configuration example is available in the <a href="./gruntfile.js">gruntfile</a></p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">const</span> {<span class="pl-c1">controllerName</span>, <span class="pl-c1">inject</span>} <span class="pl-k">=</span> ngAnnotations;
+
+@<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">'</span>controllerName<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">theController</span> {
+    <span class="pl-en">controller</span>() {
+        <span class="pl-c">/*do something*/</span>
+    }
+}</pre></div>
+
+<hr>
+
+<h3>
+<a id="informations" class="anchor" href="#informations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Informations</h3>
+
+<blockquote>
+<p>All the examples below will show you the webpack way.<br>
+However, an implementation of the angular todolist with the basic es6 syntax is available in the <a href="./example/es6">example/es6</a> folder </p>
+</blockquote>
+
+<h3>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="howit">How it works:</a>
+</h3>
+
+<blockquote>
+<p>all component annotations add 3 properties and 1 method to the given class<br>
+<code>$type</code>:   String.  the component type (controller, config, service...). Used by the <code>autodeclare</code> method.<br>
+<code>$name</code>:  String. the component name used by angular. Used by the <code>autodeclare</code> method. 
+Useful if you want to use the import system with the dependency injection system.
+With this method you'll avoid all hypothetical naming issues.</p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">/*file1.js*/</span>
+<span class="pl-k">import</span> {service} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">service</span>()
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyService</span> {}
+
+
+<span class="pl-c">/*file2.js*/</span>
+<span class="pl-k">import</span> {controller, inject} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+<span class="pl-c">// import {$name as myService} from './file1'; //before 0.1.6</span>
+<span class="pl-k">import</span> myService <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./file1<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">controller</span>()
+@<span class="pl-c1">inject</span>(myService)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyController</span> {}</pre></div>
+
+<blockquote>
+<p><code>$component</code>: Object. the object/function used by angular, can be different than the original class (function wrap). Used by the <code>autodeclare</code> method.<br>
+<code>autodeclare</code>: Function(<strong>ngModule</strong>). declares the current component to angular. (replaces the traditional <code>angular.module('...').controller('name', fn)</code>)<br>
+the ngModule parameter can be a string (angular module name) or an angular module instance.  </p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">/*autodeclare way*/</span>
+<span class="pl-k">import</span> myService <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./file1<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> myController <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./file2<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">var</span> app <span class="pl-k">=</span> angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">'</span>app<span class="pl-pds">'</span></span>, []);
+<span class="pl-c">// useful if you wanna use the import system with the module dependency injection system.</span>
+<span class="pl-k">export</span> app.<span class="pl-c1">name</span>; 
+
+[myService, myController].<span class="pl-c1">forEach</span>(component <span class="pl-k">=&gt;</span> component.<span class="pl-c1">autodeclare</span>(app));
+
+<span class="pl-c">/*alternative*/</span>
+<span class="pl-k">import</span> myService <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./file1<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> myController <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./file2<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">var</span> app <span class="pl-k">=</span> angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">'</span>app<span class="pl-pds">'</span></span>, []);
+<span class="pl-k">export</span> app.<span class="pl-c1">name</span>; <span class="pl-c">// useful if you wanna use the import system with the module dependency injection system.</span>
+
+app.<span class="pl-c1">service</span>(myService.$name, myService.$component);
+app.<span class="pl-c1">controller</span>(myController.$name, myController.$component);
+
+<span class="pl-c">/*without import*/</span>
+<span class="pl-k">import</span> {service} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">service</span>()
+<span class="pl-k">class</span> <span class="pl-en">MyService</span> {}
+
+MyService.<span class="pl-c1">autodeclare</span>(<span class="pl-s"><span class="pl-pds">'</span>moduleName<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="available-annotations" class="anchor" href="#available-annotations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available annotations</h3>
+
+<hr>
+
+<h2>
+<a id="utils" class="anchor" href="#utils" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="utils">Utils</a>
+</h2>
+
+<h3>
+<a id="inject" class="anchor" href="#inject" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_inject"><code>@inject</code></a>
+</h3>
+
+<blockquote>
+<p>The inject annotation replaces the classical array syntax for declare a dependency injection<br>
+Basically, it will feed the $inject property with the list of dependencies</p>
+</blockquote>
+
+<h4>
+<a id="type-function" class="anchor" href="#type-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="target-class-and-methods" class="anchor" href="#target-class-and-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>target: <em>class and methods</em>
+</h4>
+
+<h4>
+<a id="params" class="anchor" href="#params" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>depsToInject</strong>:    String|String[]|Component[]|Component.   component(s) to inject</li>
+<li>
+<strong>...otherDeps</strong>: <em>(Optional)</em> ...Strings.</li>
+</ul>
+
+<h4>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {inject, service} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> myFactory <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>../factory<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">service</span>()
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>$http<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>$q<span class="pl-pds">'</span></span>,myFactory) <span class="pl-c">// could be @inject(['$http','$q',myFactory])</span>
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">CommunicationService</span> {
+    <span class="pl-en">constructor</span>(<span class="pl-smi">http</span>, <span class="pl-smi">$q</span>, <span class="pl-smi">factory</span>) {
+        <span class="pl-v">this</span>.<span class="pl-c1">http</span> <span class="pl-k">=</span> http;
+        <span class="pl-v">this</span>.<span class="pl-c1">promise</span> <span class="pl-k">=</span> $q;
+        <span class="pl-v">this</span>.<span class="pl-c1">factory</span> <span class="pl-k">=</span> factory;
+    }
+    <span class="pl-k">do</span>() {<span class="pl-c">/*do something*/</span>}
+}</pre></div>
+
+<h4>
+<a id="note" class="anchor" href="#note" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note:</h4>
+
+<blockquote>
+<p>The implicit dependency injection syntax is also available but shouldn't be used because of minification issues. </p>
+</blockquote>
+
+<h4>
+<a id="usage-1" class="anchor" href="#usage-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {inject, service} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">service</span>()
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">CommunicationService</span> {
+    <span class="pl-en">constructor</span>(<span class="pl-smi">$http</span>, <span class="pl-smi">$q</span>) {
+        <span class="pl-v">this</span>.<span class="pl-c1">http</span> <span class="pl-k">=</span> $http;
+        <span class="pl-v">this</span>.<span class="pl-c1">promise</span> <span class="pl-k">=</span> $q;
+    }
+    <span class="pl-k">do</span>() {<span class="pl-c">/*do something*/</span>}
+}</pre></div>
+
+<h3>
+<a id="autobind" class="anchor" href="#autobind" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_autobind"><code>@autobind</code></a>
+</h3>
+
+<blockquote>
+<p>The autobind annotation gives the possibility to bind methods to its current context.<br>
+similar to <em>object.method.bind(object)</em></p>
+</blockquote>
+
+<h4>
+<a id="type-statement" class="anchor" href="#type-statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>statement</em>
+</h4>
+
+<h4>
+<a id="target-method-only" class="anchor" href="#target-method-only" aria-hidden="true"><span class="octicon octicon-link"></span></a>target: <em>method only</em>
+</h4>
+
+<h4>
+<a id="usage-2" class="anchor" href="#usage-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {service, inject, autobind} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">service</span>()
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>$timeout<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">CommunicationService</span> {
+
+    <span class="pl-en">constructor</span>(<span class="pl-smi">timeout</span>) {
+        <span class="pl-v">this</span>.<span class="pl-c1">timeout</span> <span class="pl-k">=</span> timeout;
+        <span class="pl-v">this</span>.<span class="pl-c1">loop</span>();
+    }
+
+    @autobind
+    <span class="pl-en">loop</span>() {
+        <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>hello<span class="pl-pds">'</span></span>);
+        <span class="pl-v">this</span>.<span class="pl-c1">timeout</span>(<span class="pl-v">this</span>.<span class="pl-c1">loop</span>, <span class="pl-c1">1000</span>);
+    }
+}</pre></div>
+
+<h3>
+<a id="attach" class="anchor" href="#attach" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_attach"><code>@attach</code></a>
+</h3>
+
+<blockquote>
+<p>The attach annotation provides a shortcut to bind references across components and keep them safe.</p>
+</blockquote>
+
+<h4>
+<a id="type-function-1" class="anchor" href="#type-function-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="target-attributes-and-methods" class="anchor" href="#target-attributes-and-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>target: <em>attributes and methods</em>
+</h4>
+
+<h4>
+<a id="params-1" class="anchor" href="#params-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>source</strong>   String|Component. source component
+
+<ul>
+<li>"this" will target the current component</li>
+</ul>
+</li>
+<li>
+<strong>path</strong>:    <em>(Optional)</em> String. path toward the property
+
+<ul>
+<li>split with dots. <code>obj.otherObj.myProperty</code>
+</li>
+</ul>
+</li>
+</ul>
+
+<h4>
+<a id="usage-3" class="anchor" href="#usage-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// factories/user.js</span>
+<span class="pl-k">import</span> {factory, inject} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">factory</span>()
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>$http<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">User</span> {
+    <span class="pl-en">constructor</span>() {
+        <span class="pl-v">this</span>.<span class="pl-c1">nested</span>.<span class="pl-c1">property</span> <span class="pl-k">=</span> <span class="pl-c1">5</span>;
+    }
+    connectedUsers <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+    <span class="pl-v">this</span>.<span class="pl-c1">users</span> <span class="pl-k">=</span> [];
+    <span class="pl-en">load</span>() {
+        <span class="pl-v">this</span>.$http.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>).<span class="pl-c1">success</span>(userlist <span class="pl-k">=&gt;</span> <span class="pl-v">this</span>.<span class="pl-c1">users</span> <span class="pl-k">=</span> userlist)
+    }
+}
+
+
+<span class="pl-c">// controller/user.js</span>
+<span class="pl-k">import</span> {inject,controller,attach} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> UserFactory <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>../factories/user.js<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">controller</span>()
+@<span class="pl-c1">inject</span>(UserFactory)
+<span class="pl-k">class</span> <span class="pl-en">FooBarController</span> {
+    @<span class="pl-c1">attach</span>(UserFactory, <span class="pl-s"><span class="pl-pds">'</span>users<span class="pl-pds">'</span></span>) <span class="pl-c">// this.userlist will refers to UserFactory.users</span>
+    userlist;
+
+    @<span class="pl-c1">attach</span>(UserFactory, <span class="pl-s"><span class="pl-pds">'</span>nested.property<span class="pl-pds">'</span></span>)
+    randomProperty;
+
+    @<span class="pl-c1">attach</span>(UserFactory, <span class="pl-s"><span class="pl-pds">'</span>load<span class="pl-pds">'</span></span>) <span class="pl-c">// same as this.reload = factory.load.bind(factory);</span>
+    reload;
+
+    <span class="pl-en">clearUsers</span>() {
+        <span class="pl-v">this</span>.<span class="pl-c1">users</span> <span class="pl-k">=</span> []; <span class="pl-c">// update the UserFactory.users property, the reference is kept.</span>
+    }
+}</pre></div>
+
+<h4>
+<a id="note-1" class="anchor" href="#note-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note:</h4>
+
+<blockquote>
+<p>binded target can be a function, a primitive or an object</p>
+</blockquote>
+
+<h4>
+<a id="warning" class="anchor" href="#warning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Warning:</h4>
+
+<blockquote>
+<p>The binding occurs after the constructor calling, so you can't use the property at this step. use the controller parameters instead.</p>
+</blockquote>
+
+<h3>
+<a id="conceal" class="anchor" href="#conceal" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_conceal"><code>@conceal</code></a>
+</h3>
+
+<blockquote>
+<p>the conceal decorator provides a way to declare the annotated properties as private</p>
+</blockquote>
+
+<h4>
+<a id="type-statement-1" class="anchor" href="#type-statement-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>statement</em>
+</h4>
+
+<h4>
+<a id="target-methods-and-attributes" class="anchor" href="#target-methods-and-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>target: <em>methods and attributes</em>
+</h4>
+
+<h4>
+<a id="usage-4" class="anchor" href="#usage-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {factory, inject, attach, conceal} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">factory</span>()
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>$http<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">UserFactory</span> {
+
+    @conceal
+    @<span class="pl-c1">attach</span>(<span class="pl-s"><span class="pl-pds">'</span>$http<span class="pl-pds">'</span></span>)
+    $http
+
+    @conceal
+    datas <span class="pl-k">=</span> [];
+
+    <span class="pl-en">constructor</span>(<span class="pl-smi">timeout</span>) {
+        <span class="pl-v">this</span>.<span class="pl-c1">datas</span> <span class="pl-k">=</span> [<span class="pl-c1">1</span>,<span class="pl-c1">2</span>,<span class="pl-c1">3</span>];
+    }
+
+    <span class="pl-en">method</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-c1">privateMethod</span>();
+    }
+
+    @conceal
+    <span class="pl-en">privateMethod</span>() {}
+}</pre></div>
+
+<hr>
+
+<h2>
+<a id="components" class="anchor" href="#components" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="components">Components</a>
+</h2>
+
+<h3>
+<a id="controller" class="anchor" href="#controller" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_controller"><code>@controller</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular controller</p>
+</blockquote>
+
+<h4>
+<a id="type-function-2" class="anchor" href="#type-function-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="params-2" class="anchor" href="#params-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>name</strong>: <em>(Optional)</em>    String.   angular controller name, by default the decorator will take the class name.</li>
+</ul>
+
+<h4>
+<a id="usage-5" class="anchor" href="#usage-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {controller} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">controller</span>(<span class="pl-s"><span class="pl-pds">'</span>HelloWorld<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyController</span> {
+    prop <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+}</pre></div>
+
+<h4>
+<a id="note-2" class="anchor" href="#note-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note:</h4>
+
+<blockquote>
+<p>With this syntax you should always use the controllerAs option and forget $scope (except in certain cases like $watch or $on usages).</p>
+</blockquote>
+
+<h4>
+<a id="usage-6" class="anchor" href="#usage-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-jade"><pre><span class="pl-ent">html</span>
+    <span class="pl-ent">head</span>
+    <span class="pl-ent">body</span>
+        <span class="pl-ent">section</span><span class="pl-c1">(</span><span class="pl-e">ng-controller</span>=<span class="pl-s">"HelloWorld as HW"</span><span class="pl-c1">)</span> {{HW.prop}}
+<span class="pl-s1">        <span class="pl-ent">script</span><span class="pl-c1">(</span><span class="pl-e">src</span>=<span class="pl-s">"app.js"</span><span class="pl-c1">)</span></span></pre></div>
+
+<h3>
+<a id="service" class="anchor" href="#service" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_service"><code>@service</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular service</p>
+</blockquote>
+
+<h4>
+<a id="type-function-3" class="anchor" href="#type-function-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="params-3" class="anchor" href="#params-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>name</strong>: <em>(Optional)</em>    String.   angular service name, by default the decorator will take the class name.</li>
+</ul>
+
+<h4>
+<a id="usage-7" class="anchor" href="#usage-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {service} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">service</span>(<span class="pl-s"><span class="pl-pds">'</span>OtherName<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyService</span> {
+    <span class="pl-en">method</span>() { <span class="pl-k">return</span> <span class="pl-c1">100</span> <span class="pl-k">*</span> <span class="pl-c1">Math</span>.<span class="pl-c1">random</span>()|<span class="pl-c1">0</span> }
+}</pre></div>
+
+<h3>
+<a id="provider" class="anchor" href="#provider" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>@provider</code>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular provider<br>
+like the native angular provider you must implement a <code>$get</code>. </p>
+</blockquote>
+
+<h4>
+<a id="type-function-4" class="anchor" href="#type-function-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="params-4" class="anchor" href="#params-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>name</strong>: <em>(Optional)</em>    String.   angular provider name, by default the decorator will take the class name.</li>
+</ul>
+
+<h4>
+<a id="usage-8" class="anchor" href="#usage-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {provider, inject} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">provider</span>()
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyProvider</span> {
+    @<span class="pl-c1">inject</span>($http)
+    $<span class="pl-en">get</span>(<span class="pl-smi">$http</span>) {}
+}</pre></div>
+
+<h3>
+<a id="factory" class="anchor" href="#factory" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_factory"><code>@factory</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular factory</p>
+</blockquote>
+
+<h4>
+<a id="type-function-5" class="anchor" href="#type-function-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="params-5" class="anchor" href="#params-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>name</strong>: <em>(Optional)</em>    String.   angular factory name, by default the decorator will take the class name.</li>
+</ul>
+
+<h4>
+<a id="usage-9" class="anchor" href="#usage-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {factory} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">factory</span>()
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyFactory</span> {
+    items;
+    <span class="pl-en">constructor</span>() {
+        <span class="pl-v">this</span>.<span class="pl-c1">items</span> <span class="pl-k">=</span> [];
+    }
+}</pre></div>
+
+<blockquote>
+<p>by default the decorator return an instance of the factory class to angular
+so the example above is similar to the following code</p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre>angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>)
+    .<span class="pl-c1">factory</span>(<span class="pl-s"><span class="pl-pds">'</span>MyFactory<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+        <span class="pl-v">this</span>.<span class="pl-c1">items</span> <span class="pl-k">=</span> [];
+        <span class="pl-k">return</span> angular.<span class="pl-c1">extend</span>(<span class="pl-v">this</span>);
+    })</pre></div>
+
+<blockquote>
+<p>You can change this behaviour by defining an <code>expose</code> method </p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {factory, autobind} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">factory</span>()
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyFactory</span> {
+    items;
+
+    @autobind
+    <span class="pl-en">get</span>() {
+        <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-c1">items</span>;
+    }
+
+    @autobind
+    <span class="pl-en">load</span>(<span class="pl-smi">list</span> <span class="pl-k">=</span> []) {
+        <span class="pl-v">this</span>.<span class="pl-c1">items</span> <span class="pl-k">=</span> list;
+    }
+
+    $<span class="pl-en">expose</span>() {
+        <span class="pl-k">return</span> {
+            load<span class="pl-k">:</span> <span class="pl-v">this</span>.<span class="pl-c1">load</span>,
+            get<span class="pl-k">:</span> <span class="pl-v">this</span>.<span class="pl-c1">get</span>
+        }
+    }
+}
+
+angular.<span class="pl-c1">module</span>(<span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>)
+    .<span class="pl-c1">factory</span>(<span class="pl-s"><span class="pl-pds">'</span>MyFactory<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+        <span class="pl-v">this</span>.<span class="pl-c1">items</span> <span class="pl-k">=</span> [];
+
+        <span class="pl-c1">this</span>.<span class="pl-en">get</span> <span class="pl-k">=</span> <span class="pl-k">function</span>() { <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-c1">items</span>; }
+        <span class="pl-c1">this</span>.<span class="pl-en">load</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">list</span>) { <span class="pl-v">this</span>.<span class="pl-c1">items</span> <span class="pl-k">=</span> list <span class="pl-k">||</span> []; }
+
+        <span class="pl-k">return</span> {
+            get<span class="pl-k">:</span> <span class="pl-v">this</span>.<span class="pl-c1">get</span>.<span class="pl-c1">bind</span>(<span class="pl-v">this</span>),
+            load<span class="pl-k">:</span> <span class="pl-v">this</span>.<span class="pl-c1">load</span>.<span class="pl-c1">bind</span>(<span class="pl-v">this</span>)
+        }
+    })</pre></div>
+
+<h3>
+<a id="directive" class="anchor" href="#directive" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_directive"><code>@directive</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular directive</p>
+</blockquote>
+
+<h4>
+<a id="type-function-6" class="anchor" href="#type-function-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="params-6" class="anchor" href="#params-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>name</strong>: <em>(Optional)</em>    String.   angular directive name, by default the decorator will take the class name.</li>
+</ul>
+
+<h4>
+<a id="usage-10" class="anchor" href="#usage-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {directive} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">directive</span>(<span class="pl-s"><span class="pl-pds">'</span>myDirective<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyDirective</span> {
+    restrict <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>A<span class="pl-pds">'</span></span>;
+    scope <span class="pl-k">=</span> {};
+    <span class="pl-en">link</span>(<span class="pl-smi">$scope</span>, <span class="pl-smi">elem</span>, <span class="pl-smi">attr</span>) {
+        <span class="pl-en">console</span><span class="pl-c1">.log</span>(<span class="pl-s"><span class="pl-pds">'</span>directive triggered<span class="pl-pds">'</span></span>);;
+    }
+}</pre></div>
+
+<h3>
+<a id="animation" class="anchor" href="#animation" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_animation"><code>@animation</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular animation</p>
+</blockquote>
+
+<h4>
+<a id="type-function-7" class="anchor" href="#type-function-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="params-7" class="anchor" href="#params-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>selector</strong>:    String.   css selector.</li>
+</ul>
+
+<h4>
+<a id="usage-11" class="anchor" href="#usage-11" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {animation} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">animation</span>(<span class="pl-s"><span class="pl-pds">'</span>.foobar<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">FoobarAnimation</span> {
+    <span class="pl-en">enter</span>(<span class="pl-smi">elem</span>, <span class="pl-smi">done</span>) {
+        elem.<span class="pl-c1">css</span>(<span class="pl-s"><span class="pl-pds">'</span>opacity<span class="pl-pds">'</span></span>, <span class="pl-c1">0</span>);
+        <span class="pl-c">/*do something*/</span>
+    }
+
+    <span class="pl-en">leave</span>(<span class="pl-smi">elem</span>, <span class="pl-smi">done</span>) {
+        elem.<span class="pl-c1">css</span>(<span class="pl-s"><span class="pl-pds">'</span>opacity<span class="pl-pds">'</span></span>, <span class="pl-c1">1</span>);
+        <span class="pl-c">/*do something*/</span>
+    }
+}</pre></div>
+
+<h3>
+<a id="config" class="anchor" href="#config" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_config"><code>@config</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular config</p>
+</blockquote>
+
+<h4>
+<a id="type-function-8" class="anchor" href="#type-function-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="usage-12" class="anchor" href="#usage-12" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {config, inject} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">config</span>()
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>$routeProvider<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">FooBarConfiguration</span> {
+
+    <span class="pl-en">constructor</span>(<span class="pl-smi">routeProvider</span>) {
+        <span class="pl-v">this</span>.<span class="pl-c1">route</span> <span class="pl-k">=</span> routeProvider;
+        <span class="pl-v">this</span>.<span class="pl-c1">setRoutes</span>();
+    }
+
+    <span class="pl-en">setRoutes</span>() {
+        <span class="pl-v">this</span>.<span class="pl-c1">route</span>.<span class="pl-c1">when</span>(<span class="pl-s"><span class="pl-pds">'</span>/xxx<span class="pl-pds">'</span></span>, { template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span> })
+    }
+
+}</pre></div>
+
+<h3>
+<a id="run" class="anchor" href="#run" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_run"><code>@run</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular run</p>
+</blockquote>
+
+<h4>
+<a id="type-function-9" class="anchor" href="#type-function-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="usage-13" class="anchor" href="#usage-13" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {run, inject} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">run</span>()
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>myFactory<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">SomeRun</span> {
+
+    <span class="pl-en">constructor</span>(<span class="pl-smi">myFactory</span>) {
+        <span class="pl-v">this</span>.<span class="pl-c1">fact</span> <span class="pl-k">=</span> myFactory;
+        <span class="pl-v">this</span>.<span class="pl-c1">initModel</span>();
+    }
+
+    <span class="pl-en">initModel</span>() {
+        <span class="pl-v">this</span>.<span class="pl-c1">fact</span>.<span class="pl-c1">load</span>();
+    }
+
+}</pre></div>
+
+<h3>
+<a id="filter" class="anchor" href="#filter" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_filter"><code>@filter</code></a>
+</h3>
+
+<blockquote>
+<p>declare the given class as an angular filter</p>
+</blockquote>
+
+<h4>
+<a id="type-function-10" class="anchor" href="#type-function-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>type: <em>function</em>
+</h4>
+
+<h4>
+<a id="params-8" class="anchor" href="#params-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>properties</strong>: <em>(Optional)</em>    Object|String.   angular filter properties. contains the name and the stateful attribute
+
+<ul>
+<li>name: String. angular filter name, by default the decorator will take the class name.</li>
+<li>stateful: Boolean. default false</li>
+</ul>
+</li>
+</ul>
+
+<h4>
+<a id="usage-14" class="anchor" href="#usage-14" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<blockquote>
+<p>The decorated filter is slightly different than the original.
+to make it work you need to implement a <code>$filter</code> method. This is the method used by angular.</p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {filter} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">filter</span>(<span class="pl-s"><span class="pl-pds">'</span>capitalizeFilter<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">Capitalize</span> {
+
+    <span class="pl-en">toCapitalize</span>(<span class="pl-smi">val</span>) {
+        <span class="pl-k">return</span> val[<span class="pl-c1">0</span>].<span class="pl-c1">toUpperCase</span>() <span class="pl-k">+</span> val.<span class="pl-c1">slice</span>(<span class="pl-c1">1</span>);
+    }
+
+    $<span class="pl-en">filter</span>(<span class="pl-smi">val</span>) {
+        <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-c1">toCapitalize</span>(val);
+    }
+}</pre></div>
+
+<h4>
+<a id="note-3" class="anchor" href="#note-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note:</h4>
+
+<blockquote>
+<p>If you need to write a stateful filter, you must give a literal objet as parameter to the filter decorator</p>
+</blockquote>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">//inspired by https://docs.angularjs.org/guide/filter</span>
+<span class="pl-k">import</span> {filter, inject, attach} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+@<span class="pl-c1">filter</span>({name<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>decorate<span class="pl-pds">'</span></span>, stateful<span class="pl-k">:</span><span class="pl-c1">true</span>})
+@<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>decoration<span class="pl-pds">'</span></span>)
+<span class="pl-k">export</span> <span class="pl-k">default</span> Decorate {
+
+    @<span class="pl-c1">attach</span>(<span class="pl-s"><span class="pl-pds">'</span>decoration<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>symbol<span class="pl-pds">'</span></span>)
+    decorator;
+
+    $<span class="pl-en">filter</span>(<span class="pl-smi">input</span>) {
+        <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-c1">decorator</span> <span class="pl-k">+</span> input <span class="pl-k">+</span> <span class="pl-v">this</span>.<span class="pl-c1">decorator</span>;
+    }
+}</pre></div>
+
+<h2>
+<a id="wrappers" class="anchor" href="#wrappers" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="wrappers">Wrappers</a>
+</h2>
+
+<blockquote>
+<p>the <em>Value</em> and <em>Constant</em> components can't be replaced by a class.<br>
+In order to simplify their declaration two wrappers are available.</p>
+</blockquote>
+
+<h3>
+<a id="constant" class="anchor" href="#constant" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_constant"><code>constant</code></a>
+</h3>
+
+<h4>
+<a id="params-9" class="anchor" href="#params-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>name</strong>:    String.   constant name.</li>
+<li>
+<strong>value</strong>:    Mix.   constant value.</li>
+</ul>
+
+<h4>
+<a id="usage-15" class="anchor" href="#usage-15" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {constant} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-c1">constant</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>a constant<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="value" class="anchor" href="#value" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="d_value"><code>value</code></a>
+</h3>
+
+<h4>
+<a id="params-10" class="anchor" href="#params-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Params:</h4>
+
+<ul>
+<li>
+<strong>name</strong>:    String.   value name.</li>
+<li>
+<strong>value</strong>:    Mix.   value value.</li>
+</ul>
+
+<h4>
+<a id="usage-16" class="anchor" href="#usage-16" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage:</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">import</span> {value} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng-annotations<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-c1">value</span>(<span class="pl-s"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>a value<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="modify-and-build" class="anchor" href="#modify-and-build" aria-hidden="true"><span class="octicon octicon-link"></span></a><a name="modifBuild">Modify and build</a>
+</h3>
+
+<hr>
+
+<p><code>npm install webpack-dev-server -g</code><br>
+<code>npm install webpack</code><br>
+<code>npm install</code>  </p>
+
+<p><em>Build dist version:</em> <code>npm run build</code><br>
+<em>Build es6 example:</em> <code>npm run es6</code><br>
+<em>Start the dev server:</em> <code>npm run dev</code> then go to <em>http://localhost:8080/webpack-dev-server/</em>  </p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/PillowPillow/ng-annotations">Ng-annotations</a> is maintained by <a href="https://github.com/PillowPillow">PillowPillow</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>

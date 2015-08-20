@@ -548,7 +548,9 @@ export default class SomeRun {
 
 #### type: *function*
 #### Params:
- - **name**: *(Optional)*    String.   angular filter name, by default the decorator will take the class name.
+ - **properties**: *(Optional)*    Object|String.   angular filter properties. contains the name and the stateful attribute
+    - name: String. angular filter name, by default the decorator will take the class name.
+    - stateful: Boolean. default false
 
 #### Usage:
 > The decorated filter is slightly different than the original.
@@ -571,17 +573,16 @@ export default class Capitalize {
 ````
 
 #### Note:
-> If you need to write a stateful filter, you have to mark the filter as `$stateful` by defining a $stateful property to true
+> If you need to write a stateful filter, you must give a literal objet as parameter to the filter decorator
 
 ````javascript
 //inspired by https://docs.angularjs.org/guide/filter
 import {filter, inject, attach} from 'node_modules/ng-annotations';
 
-@filter('decorate')
+@filter({name:'decorate', stateful:true})
 @inject('decoration')
 export default Decorate {
 
-	$stateful=true;
 	@attach('decoration', 'symbol')
 	decorator;
 

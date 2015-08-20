@@ -7,13 +7,21 @@ import inject from 'src/decorators/utils/inject';
  *
  * declares a new angular filter
  *
- * @param name (optional)  replaces the class name
+ * @param filterProps (optional)  filter properties containing name and the stateful attribute
  *
  * @returns {Function}
  */
-export default function NgFilter(name = '') {
+export default function NgFilter(filterProps = {name:'',stateful:false}) {
+
 	return (target) => {
-		name = name || target.name;
+
+		let name = '', stateful = false;
+		if(filterProps instanceof Object){
+			name = filterProps.name || target.name;
+			stateful = !!filterProps.stateful;
+		}
+		else
+			name = filterProps || target.name;
 
 		var component = function(...injections) {
             let instance = new target(...injections);
@@ -22,8 +30,15 @@ export default function NgFilter(name = '') {
 				throw Error('an annotated "filter" must implement the "$filter" method');
 			utils.applyTransformations(target, instance, injections);
 
-			if(instance.$stateful === true)
+			//@todo remove it in the next version
+			if(instance.$stateful === true) {
+				console.warn('the $stateful property is deprecated and will be removed in the next versions, use the @filter parameter instead');
+				console.warn('https://github.com/PillowPillow/ng-annotations#d_filter');
 				filter.$stateful = true;
+			}
+
+			if(stateful)
+				filter.$stateful = stateful;
 
 			return filter;
 			function filter(...parameters) {

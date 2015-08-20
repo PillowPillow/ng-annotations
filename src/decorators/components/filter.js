@@ -16,13 +16,19 @@ export default function NgFilter(name = '') {
 		name = name || target.name;
 
 		var component = function(...injections) {
-            let filter = new target(...injections);
+            let instance = new target(...injections);
 
-			if(!(filter.$filter instanceof Function))
+			if(!(instance.$filter instanceof Function))
 				throw Error('an annotated "filter" must implement the "$filter" method');
-			utils.applyTransformations(target, filter, injections);
+			utils.applyTransformations(target, instance, injections);
 
-			return (...parameters) => filter.$filter(...parameters);
+			if(instance.$stateful === true)
+				filter.$stateful = true;
+
+			return filter;
+			function filter(...parameters) {
+			    return instance.$filter(...parameters);
+			}
 		}
 
 		if(!(target.$inject instanceof Array) || target.$inject.length === 0) {

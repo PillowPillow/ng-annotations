@@ -1,11 +1,51 @@
+## 0.1.12 (2015-08-20)
+
+Update:  
+* @filter
+
+> the $stateful property is now deprecated
+> use the stateful parameter instead
+
+*before*  
+
+````javascript
+import {filter, inject} from 'node_modules/ng-annotations';
+
+@filter('statefulFilter')
+@inject('someDependency')
+class StatefulFilter {
+	$stateful = true;
+	$filter(input) {
+		return input; //do something with the dependency
+	}
+}
+
+````
+
+*after*
+
+````javascript
+import {filter, inject} from 'node_modules/ng-annotations';
+
+@filter({name: 'statefulFilter', stateful:true})
+@inject('someDependency')
+class StatefulFilter {
+	$filter(input) {
+		return input; //do something with the dependency
+	}
+}
+
+````
+
+
 ## 0.1.11 (2015-08-20)
 
-Bugfix:  
+Feature:  
 * @filter
 
 > now supports the stateful filters  
 
-````
+````javascript
 import {filter, inject} from 'node_modules/ng-annotations';
 
 @filter('statefulFilter')

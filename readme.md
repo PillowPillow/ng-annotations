@@ -408,7 +408,7 @@ angular.module('...')
 	})
 ````
 
-> You can change this behaviour by defining an `expose` method 
+> You can change this behaviour by defining an `$expose` method 
 
 ````javascript
 import {factory, autobind} from 'node_modules/ng-annotations';

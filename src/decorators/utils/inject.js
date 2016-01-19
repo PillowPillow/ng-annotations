@@ -24,7 +24,6 @@ export default function inject(toInject, ...more) {
 
 		if(options.length > 0)
 			target = options[1].value;
-
 		Object.defineProperty(target, '$inject', {
 			value: toInject,
 			enumerable: true,

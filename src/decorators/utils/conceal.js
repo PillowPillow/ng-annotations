@@ -1,7 +1,7 @@
 import utils from 'src/libs/utils';
 
 /**
- * @decorator: @isolate
+ * @decorator: @conceal
  * @type: statement
  */
 export default function conceal(prototype, name, descriptor) {

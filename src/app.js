@@ -2,6 +2,7 @@ var NgAnnotations = {};
 
 // components
 NgAnnotations.controller = require('src/decorators/components/controller');
+NgAnnotations.component = require('src/decorators/components/component');
 NgAnnotations.service = require('src/decorators/components/service');
 NgAnnotations.animation = require('src/decorators/components/animation');
 NgAnnotations.config = require('src/decorators/components/config');

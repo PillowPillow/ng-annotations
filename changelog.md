@@ -1,3 +1,43 @@
+## 1.0.0 (2016-01-19)
+
+@component: [new feature]
+> the component decorator is now available.  
+> it provides a way to declare the class members as private.
+
+````javascript
+import {component, inject} from 'node_modules/ng-annotations';
+
+@component({
+	selector: 'myComponent',
+	alias: 'MyCmp',
+	type: 'EA',
+	ioProps: {
+		name: 'cmpName'
+	},
+	template: `
+		<button ng-click="MyCmp.sayHello()">say hello</button>
+	`,
+	lifecycle: {
+		compile: () => { console.log('compile time'); },
+		prelink: () => { console.log('prelink time'); },
+		postlink: () => { console.log('postlink time'); }
+	}
+})
+@inject('$http')
+export default class MyComponent {
+	sayHello() {
+		console.log(`Hello ${this.$ioProps.name}`);
+	}
+}
+
+````
+
+````html
+<my-component cmp-name="Jack"></my-component>
+````
+
+
+
 ## 0.1.12 (2015-08-20)
 
 Update:  

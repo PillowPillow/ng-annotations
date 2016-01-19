@@ -1,6 +1,6 @@
 {
 	"name": "ng-annotations",
-	"version": "0.1.12",
+	"version": "1.0.0-beta",
 	"description": "angular wrapper based on annotations",
 	"main": "index.js",
 	"scripts": {

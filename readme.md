@@ -3,7 +3,7 @@
 =======================
 
 Ng-annotations is a small javascript library that helps to produce more structured angular applications using es6 classes and es7 decorators.  
-This library was build with webpack in mind but should work well with the other transpilers/javascript supersets like babel or typescript (with es7 and es6 advanced features)
+This library was build with webpack in mind but should works well with the other transpilers/javascript supersets like babel or typescript (with es7 and es6 advanced features)
 
 ------------
 
@@ -28,9 +28,9 @@ This library was build with webpack in mind but should work well with the other 
 * [Wrappers](#wrappers):
 	* [constant](#d_constant)
 	* [value](#d_value)
+* [Composites](#composites):
+	* [component](#c_component)
 * [Modify and build](#modifBuild)
-
-
 
 ------------
 
@@ -619,6 +619,58 @@ import {value} from 'node_modules/ng-annotations';
 export default value('name', 'a value');
 ````
 
+## <a name="composites">Composites</a>
+> The composites decorators aren't simple angular component wrappers like above, they implement new concepts on top of Angular 1.
+
+
+###<a name="c_component">`@component`</a>
+> This decorator declares the given class as a controller and creates an associated directive
+
+> With the emergence of the new components oriented frameworks like react or angular 2, the application structures changed drastically.
+> Most of the time, when we create a directive we want also create a controller with its own logic, however create 2 files for 2 lines of code each is a waste of time.
+> The following decorator combine a controller and a directive in the way of the angular2's @component.
+
+#### type: *function*
+#### Params:
+ - **options**: *(Mandatory)*    Object.   component options.
+	- **selector**: *(Mandatory)*    String.   directive's name
+	- **alias**: *(Optional)*    String.   controllerAs option, defaults to the selector value
+	- **type**: *(Optional)*    String.   directive's restrict option, defaults to `E`
+	- **ioProps**: *(Optional)*    Object.   the scope properties, all props are bind with the `=` operator (two way binding)
+	- **template**: *(Optional)*    Any.   directive's template option
+	- **templateUrl**: *(Optional)*    Any.   directive's templateUrl option
+	- **transclude**: *(Optional)*    Boolean.   directive's transclude option
+	- **lifecycle**: *(Optional)*    Object   array of callbacks, the available hooks are `compile`, `prelink` and `postlink`
+
+> the component decorator inject a $ioProps property to the working class. It contains the scope properties
+
+#### Usage:
+````javascript
+import {component, inject} from 'node_modules/ng-annotations';
+
+@component({
+	selector: 'myComponent',
+	alias: 'MyCmp',
+	type: 'EA',
+	ioProps: {
+		name: 'cmpName'
+	},
+	template: `
+		<button ng-click="MyCmp.sayHello()">say hello</button>
+	`,
+	lifecycle: {
+		compile: () => { console.log('compile time'); },
+		prelink: () => { console.log('prelink time'); },
+		postlink: () => { console.log('postlink time'); }
+	}
+})
+@inject('$http')
+export default class MyComponent {
+	sayHello() {
+		console.log(`Hello ${this.$ioProps.name}`);
+	}
+}
+````
 
 ### <a name="modifBuild">Modify and build</a>
 --------------------

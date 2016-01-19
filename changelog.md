@@ -2,7 +2,6 @@
 
 @component: [new feature]
 > the component decorator is now available.  
-> it provides a way to declare the class members as private.
 
 ````javascript
 import {component, inject} from 'node_modules/ng-annotations';

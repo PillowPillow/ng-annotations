@@ -642,7 +642,7 @@ export default value('name', 'a value');
 	- **transclude**: *(Optional)*    Boolean.   directive's transclude option
 	- **lifecycle**: *(Optional)*    Object   array of callbacks, the available hooks are `compile`, `prelink` and `postlink`
 
-> the component decorator inject a $ioProps property to the working class. It contains the scope properties
+> the component decorator injects a $ioProps property to the working class. It contains the scope properties
 
 #### Usage:
 ````javascript

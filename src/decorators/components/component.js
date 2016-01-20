@@ -99,7 +99,7 @@ function generateController(target, selector) {
 	var component = function(...injections) {
 		let instance = new target(...injections);
 		if(!instance.$ioProps)
-			instance.$ioProps = null;
+			instance.$ioProps = {};
 		utils.applyTransformations(target, instance, injections);
 		return utils.getFinalComponent(target, instance);
 	}
@@ -185,6 +185,8 @@ function extractComponentOptions(options = {}) {
 				let ioPropsContainer = {}
 				if(!controller.$ioProps || typeof controller.$ioProps !== 'object')
 					controller.$ioProps = ioPropsContainer;
+				else
+					ioPropsContainer = controller.$ioProps;
 
 				let props = Object.keys(options.ioProps || []);
 				props.forEach((propname) => {

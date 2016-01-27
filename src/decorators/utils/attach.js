@@ -27,6 +27,8 @@ export default function attach(source = 'this', path = '') {
 		if(name === undefined)
 			throw Error(`@attach decorator can only be applied to methods or attributes`);
 
+		descriptor.configurable = true;
+
 		if(source instanceof Object)
 			source = source.$name;
 

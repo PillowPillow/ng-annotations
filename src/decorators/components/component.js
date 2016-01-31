@@ -203,7 +203,7 @@ function extractComponentOptions(options = {}) {
 				hooks.prelink.apply(this, [scope, element, attributes, controller, transcludeFn])
 			},
 			post: function(...postArgs) {
-				hooks.postlink.apply(this, ...postArgs)
+				hooks.postlink.apply(this, postArgs)
 			}
 		}
 	}

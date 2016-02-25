@@ -29,7 +29,7 @@ export default class NgDecoratorUtils {
 	static getIdentifier(key) {
 
 		if(this.identifiers[key] === undefined)
-			this.identifiers[key] = Symbol ? Symbol(key) : this.getUUID();
+			this.identifiers[key] = window.Symbol ? Symbol(key) : this.getUUID();
 
 		return this.identifiers[key];
 	}

@@ -64,7 +64,7 @@ export default class MyService {
 > a configuration example is available in the [gruntfile](./gruntfile.js)
 
 ````javascript
-const {controllerName, inject} = ngAnnotations;
+const {controller, inject} = ngAnnotations;
 
 @controller('controllerName')
 export default class theController {

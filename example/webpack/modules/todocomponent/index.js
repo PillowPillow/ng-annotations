@@ -5,6 +5,7 @@ import todoRun from './runs/todos';
 import storageService from './services/storage';
 import todoFactory from './factories/todos';
 import todoCmp from './components/todolist';
+import decoratedLogger from './decorators/log';
 //import todoCtrl from './controllers/todolist';
 //import todolistDirective from './directives/todolist';
 import todoEscapeDirective from './directives/todoEscape';
@@ -23,6 +24,7 @@ export default app.name;
 //app.directive(todoEscapeDirective.$name, todoEscapeDirective.$component);
 //app.directive(todoFocusDirective.$name, todoFocusDirective.$component);
 
+
 [
 	storageConst,
 	todoRun,
@@ -32,5 +34,6 @@ export default app.name;
 	//todoCtrl,
 	//todolistDirective,
 	todoEscapeDirective,
-	todoFocusDirective
+	todoFocusDirective,
+	decoratedLogger
 ].forEach(component => component.autodeclare(app));

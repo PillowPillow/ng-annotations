@@ -3,12 +3,14 @@ import {component, inject, attach, conceal} from 'src/app';
 import todos from '../factories/todos';
 import tplRenderer from '../templates/todolist.jade';
 
+const $log = '$log';//service decorated by our log decorator
+
 @component({
 	selector: 'todoList',
 	alias: 'TodoList',
 	template: tplRenderer()
 })
-@inject('$filter', todos)
+@inject('$filter', $log, todos)
 export default class TodoList {
 
 	statusFilter = {};
@@ -26,8 +28,9 @@ export default class TodoList {
 	@attach(todos, 'todos')
 	todos;
 
-	constructor($filter) {
+	constructor($filter, logger) {
 		this.filter = $filter('filter');
+		logger.special('component initialized');
 	}
 
 	get allChecked() {

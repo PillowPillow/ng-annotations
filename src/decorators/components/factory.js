@@ -1,5 +1,5 @@
 import utils from 'src/libs/utils';
-import inject from 'src/decorators/utils/inject';
+import {inject} from 'src/decorators/utils/inject';
 
 /**
  * @decorator: @factory

@@ -1,7 +1,46 @@
+## 1.1.0 (2016-06-29)
+
+@decorator: [new feature]
+> the decorator decorator is now available.
+
+````javascript
+import {decorator, inject} from 'node_modules/ng-annotations';
+
+@decorator('$log')
+@inject('$delegate')
+export default class DecoratedLogService {
+
+	/* not necessary if you don't need to override completely the decorated service
+	@attach('$delegate')
+	delegate;
+	*/
+
+	constructor(delegatedService) {
+		delegatedService.specialLogger = (...data) => this.specialLogger(data);
+	}
+
+	specialLogger(data) {
+		console.log('special logger : ', ...data);
+	}
+
+	/* implicit
+	$decorate() {
+		return this.delegate;
+	}
+	*/
+
+}
+
+````
+
+````html
+<my-component cmp-name="Jack"></my-component>
+````
+
 ## 1.0.0 (2016-01-19)
 
 @component: [new feature]
-> the component decorator is now available.  
+> the component decorator is now available.
 
 ````javascript
 import {component, inject} from 'node_modules/ng-annotations';

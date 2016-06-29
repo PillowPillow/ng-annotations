@@ -7,7 +7,7 @@ export default class NgDecoratorUtils {
 
 	static extractParameters(fn) {
 		var fnText = fn.toString().replace(this.regexStripComment, ''),
-		args = fnText.match(this.regexArgs);
+			args = fnText.match(this.regexArgs);
 		return args && args[1].length > 0 ? args[1].split(',') : [];
 	}
 
@@ -39,9 +39,15 @@ export default class NgDecoratorUtils {
 			configurable: true,
 			enumerable: false,
 			value: function(ngModule) {
-				let params = !!this.$name ? [this.$name, this.$component] : [this.$component];
+				let component = this.$component;
+				if(this.$component instanceof Object && '_$inject' in this.$component)
+					component = [...this.$component._$inject, this.$component];
+
+				let params = !!this.$name ? [this.$name, component] : [component];
+
 				if(typeof ngModule === 'string')
 					ngModule = angular.module(ngModule);
+
 				return ngModule[this.$type](...params);
 			}
 		});
@@ -49,25 +55,25 @@ export default class NgDecoratorUtils {
 
 	static applyTransformations(component, instance = {}, injections = []) {
 		let $transformKey = this.getIdentifier('$transform'),
-		transformations = component.prototype[$transformKey] || [];
+			transformations = component.prototype[$transformKey] || [];
 		transformations.forEach(transformation => transformation(instance, component, injections));
 	}
 
 	static getFinalComponent(target, instance) {
 
 		let $privateKey = this.getIdentifier('$private'),
-		privateProperties = target.prototype[$privateKey] || [];
+			privateProperties = target.prototype[$privateKey] || [];
 
 		if(privateProperties.length === 0)
 			return instance;
 
 		privateProperties.push('constructor');
 		let prototypeProperties = Object.getOwnPropertyNames(target.prototype),
-		instanceProperties = Object.getOwnPropertyNames(instance);
+			instanceProperties = Object.getOwnPropertyNames(instance);
 
 		let properties = this.arrayUnique(prototypeProperties.concat(instanceProperties)),
-		publicProperties = properties.filter(property => !~privateProperties.indexOf(property)),
-		exposed = {};
+			publicProperties = properties.filter(property => !~privateProperties.indexOf(property)),
+			exposed = {};
 
 		publicProperties.forEach(property => {
 			if(instance[property] instanceof Function) {

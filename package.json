@@ -1,56 +1,59 @@
 {
-	"name": "ng-annotations",
-	"version": "1.0.4",
-	"description": "angular wrapper based on annotations",
-	"main": "index.js",
-	"scripts": {
-		"build": "webpack --progress -c --config webpack/webpack.dist.config.js",
-		"dev": "webpack-dev-server --content-base example/webpack --hot --progress -c --config webpack/webpack.dev.config.js",
-		"es6": "grunt es6",
-		"unit": "karma start"
-	},
-	"keywords": [
-		"angular",
-		"decorator",
-		"annotation",
-		"wrapper"
-	],
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:PillowPillow/ng-annotations.git"
-	},
-	"authors": [
-		"Nicolas Gaignoux <gaignoux.nicolas@gmail.com>"
-	],
-	"license": "MIT",
-	"devDependencies": {
-		"angular": "^1.4.8",
-		"angular-mocks": "^1.4.8",
-		"babel-core": "^5.8.21",
-		"babel-loader": "^5.3.2",
-		"babel-runtime": "^5.8.20",
-		"chai": "^3.2.0",
-		"css-loader": "^0.15.5",
-		"extract-text-webpack-plugin": "^0.8.2",
-		"file-loader": "^0.8.4",
-		"grunt": "^0.4.5",
-		"grunt-babel": "^5.0.1",
-		"jade": "^1.11.0",
-		"jade-loader": "^0.7.1",
-		"jit-grunt": "^0.9.1",
-		"karma": "^0.13.8",
-		"karma-chai": "^0.1.0",
-		"karma-firefox-launcher": "^0.1.6",
-		"karma-mocha": "^0.2.0",
-		"karma-mocha-reporter": "^1.1.1",
-		"karma-webpack": "^1.7.0",
-		"mocha": "^2.2.5",
-		"node-sass": "^3.2.0",
-		"style-loader": "^0.12.3",
-		"time-grunt": "^1.2.1",
-		"todomvc-app-css": "^2.0.1",
-		"todomvc-common": "^1.0.2",
-		"url-loader": "^0.5.6",
-		"webpack": "^1.10.5"
-	}
+  "name": "ng-annotations",
+  "version": "1.1.0",
+  "description": "angular wrapper based on annotations",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --progress -c --config webpack/webpack.dist.config.js",
+    "dev": "webpack-dev-server --port 8080 --content-base example/webpack --hot --progress -c --config webpack/webpack.dev.config.js",
+    "es6": "grunt es6",
+    "unit": "karma start"
+  },
+  "keywords": [
+    "angular",
+    "decorator",
+    "annotation",
+    "wrapper"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PillowPillow/ng-annotations.git"
+  },
+  "authors": [
+    "Nicolas Gaignoux <gaignoux.nicolas@gmail.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "angular": "^1.4.8",
+    "angular-mocks": "^1.4.8",
+    "babel-core": "^5.8.21",
+    "babel-loader": "^5.3.2",
+    "babel-runtime": "^5.8.20",
+    "chai": "^3.2.0",
+    "css-loader": "^0.15.5",
+    "extract-text-webpack-plugin": "^0.8.2",
+    "file-loader": "^0.8.4",
+    "grunt": "^0.4.5",
+    "grunt-babel": "^5.0.1",
+    "jade": "^1.11.0",
+    "jade-loader": "^0.7.1",
+    "jit-grunt": "^0.9.1",
+    "karma": "^0.13.8",
+    "karma-chai": "^0.1.0",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.1.1",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.2.5",
+    "node-sass": "^3.2.0",
+    "style-loader": "^0.12.3",
+    "time-grunt": "^1.2.1",
+    "todomvc-app-css": "^2.0.1",
+    "todomvc-common": "^1.0.2",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.10.5"
+  },
+  "dependencies": {
+    "angular": "^1.5.7"
+  }
 }

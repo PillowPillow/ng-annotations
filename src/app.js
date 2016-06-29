@@ -11,13 +11,14 @@ NgAnnotations.factory = require('src/decorators/components/factory');
 NgAnnotations.filter = require('src/decorators/components/filter');
 NgAnnotations.provider = require('src/decorators/components/provider');
 NgAnnotations.run = require('src/decorators/components/run');
+NgAnnotations.decorator = require('src/decorators/components/decorator');
 
 // wrappers
 NgAnnotations.constant = require('src/wrappers/constant');
 NgAnnotations.value = require('src/wrappers/value');
 
 // utils
-NgAnnotations.inject = require('src/decorators/utils/inject');
+NgAnnotations.inject = require('src/decorators/utils/inject').inject;
 NgAnnotations.autobind = require('src/decorators/utils/autobind');
 NgAnnotations.attach = require('src/decorators/utils/attach');
 NgAnnotations.conceal = require('src/decorators/utils/conceal');

@@ -25,6 +25,7 @@ This library was build with webpack in mind but should works well with the other
 	* [@config](#d_config)
 	* [@run](#d_run)
 	* [@filter](#d_filter)
+	* [@decorator](#d_decorator)
 * [Wrappers](#wrappers):
 	* [constant](#d_constant)
 	* [value](#d_value)
@@ -591,6 +592,84 @@ export default Decorate {
 	}
 }
 ````
+
+
+###<a name="d_decorator">`@decorator`</a>
+> provides a way to decorate an existing angular element
+
+#### type: *function*
+#### Params:
+ - **name**: String.   angular element's name to decorate.
+
+#### Usage:
+````javascript
+import {decorator, inject} from 'node_modules/ng-annotations';
+
+@decorator('elementName')
+@inject('$delegate')
+export default class DecoratedElement {
+	constructor($delegate) {
+		/*decoration*/
+	}
+}
+````
+
+> by default the decorator return an instance of $delegate
+> so the example above is similar to the following code
+
+````javascript
+angular.module('...')
+	.config(function($provide) {
+		$provide.decorator('elementName', [
+			'$delegate',
+			($delegate) => {
+				/*decoration*/
+				return $delegate;
+			}
+		])
+	})
+````
+
+> You can change this behaviour by defining an `$decorate` method
+
+````javascript
+import {decorator, inject, attach} from 'node_modules/ng-annotations';
+
+@decorator('elementName')
+@inject('$delegate')
+export default class DecoratedElement {
+
+	//@attach('$delegate')
+	//$delegate;
+
+	sayHello() {
+		console.log('hello world');
+	}
+
+	$decorate() {
+		//this.$delegate.sayHello = () => this.sayHello();
+		//return this.$delegate;
+		return this;
+	}
+}
+
+angular.module('...')
+	.config(function($provide) {
+		$provide.decorator('elementName', [
+			'$delegate',
+			($delegate) => {
+				return {
+					sayHello() {
+						console.log('hello world');
+					}
+				};
+			}
+		])
+	})
+````
+
+
+
 
 ## <a name="wrappers">Wrappers</a>
 > the *Value* and *Constant* components can't be replaced by a class.  

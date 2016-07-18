@@ -26,6 +26,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "angular": "^1.5.7",
+    "angular-mocks": "^1.5.7",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-class-properties": "^6.10.2",
